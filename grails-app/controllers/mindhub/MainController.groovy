@@ -10,21 +10,10 @@ class MainController {
 		print "got here!"
 
 		def jsonString
-//		def data = params
-//		print data
-//		
-//		def slurper = new JsonSlurper()
-//		def result = slurper.parseText(params)
-//		print result
 		
 		params.each {key, value ->
 			if(key!="action" && key!="controller" && key!="format") jsonString = key
 		}
-		
-//		def builder = new groovy.json.JsonBuilder()
-//		def root = builder.doc{json}
-//		assert root instanceof Map
-//		print root.toString()
 		
 		def slurper = new JsonSlurper()
 		def json = slurper.parseText(jsonString)

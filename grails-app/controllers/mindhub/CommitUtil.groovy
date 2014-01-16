@@ -1,9 +1,7 @@
 package mindhub
 
-class CommitController {
+class CommitUtil {
 	List history
-
-    def index() { }
 	
 	def renderHistory() {}
 	

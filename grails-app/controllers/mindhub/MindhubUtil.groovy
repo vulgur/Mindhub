@@ -74,6 +74,7 @@ class MindhubUtil {
 		def mm1 = doc1.mindmap
 		def mm2 = doc2.mindmap
 		def diffs = []
+		def commonNodeIds = []
 		def nodes1 = mm1.nodes
 		def nodes2 = mm2.nodes
 		// search added nodes
@@ -83,6 +84,9 @@ class MindhubUtil {
 				diff.node = node;
 				diff.type = Diff.DiffType.ADDED
 				diffs.add(diff);
+			} else {
+				// add common nodes
+				commonNodeIds.add(node.id)
 			}
 		}
 		// search removed nodes
@@ -94,6 +98,23 @@ class MindhubUtil {
 				diffs.add(diff);
 			}
 		}
+		// search modified nodes
+		for (key in commonNodeIds) {
+			Node node1 = getNodeById(nodes1, key)
+			Node node2 = getNodeById(nodes2, key)
+			if (node1.content != node2.content) {
+				Diff diff = new Diff()
+				diff.node = node1;
+				diff.type = Diff.DiffType.MODIFIED
+				diffs.add(diff)
+			}			
+		}
 		return diffs
 	}	
+	
+	String getNodeById(nodes, key) {
+		for (node in nodes) {
+			if (node.id == key) return node
+		}
+	}
 }
