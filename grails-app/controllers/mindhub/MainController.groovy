@@ -23,7 +23,7 @@ class MainController {
 			print it
 		}
 		
-		Document document = MindhubUtil.fromJSON(json)
+		Document document = MindmapUtil.fromJSON(json)
 		print document.id
 		print document.title
 		print document.createdDate
@@ -37,17 +37,9 @@ class MainController {
 		render "Saved!!!"
 	}
 	
-	int nodeCount(Node node) {
-		if (node.children == null || node.children.size() == 0) {
-			return 0
-		}
-		int count = 0;
-		print "children count:" + node.children.size()
-		for (Node child in node.children) {
-			print child.content
-			print "children count:" + child.children.size()
-			count =  1+nodeCount(child)
-		}
-		return count
+	def showPartners() {
+		Document doc = params.document
+		List partners = doc.partners
+		render partners as JSON
 	}
 }
