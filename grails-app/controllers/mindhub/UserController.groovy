@@ -18,7 +18,7 @@ class UserController {
 		if (user) {
 			session.user = user
 			print user
-			redirect(controller:"main")
+			redirect(controller:"mindmap", params:[user:user.username])
 //			redirect(uri:"index.gsp")
 //			redirect(uri: "/main/index")
 		} else {

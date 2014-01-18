@@ -2,9 +2,13 @@ package mindhub
 import grails.converters.JSON;
 import groovy.json.JsonSlurper
 
-class MainController {
-
-    def index() {}
+class MindmapController {
+	static layout = ""
+	
+    def index() {
+		print params.user
+		respond params
+	}
 	
 	def save() {
 		print "got here!"

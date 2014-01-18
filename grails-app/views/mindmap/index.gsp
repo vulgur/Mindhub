@@ -9,10 +9,10 @@
 	<title>Mindhub</title>
 
 	<link rel="icon" type="image/png" href="img/favicon.png" />
-	<link rel="stylesheet" href="css/common.css"/>
-	<link rel="stylesheet" href="css/app.css"/>
-	<link rel="stylesheet" href="css/Aristo/jquery-ui-1.8.7.custom.css"/>
-	<link rel="stylesheet" href="css/minicolors/jQuery.miniColors.css"/>
+	<link rel="stylesheet" href="../css/common.css"/>
+	<link rel="stylesheet" href="../css/app.css"/>
+	<link rel="stylesheet" href="../css/Aristo/jquery-ui-1.8.7.custom.css"/>
+	<link rel="stylesheet" href="../css/minicolors/jQuery.miniColors.css"/>
 
 	<script id="template-float-panel" type="text/x-jquery-tmpl">
 	<div class="ui-widget ui-dialog ui-corner-all ui-widget-content float-panel no-select">
@@ -197,12 +197,20 @@
 		<div id="topbar">
 			<div id="toolbar">
 				<div id="logo" class="logo-bg">
-					<span>MINDHUB</span>
+					<span>${params.user}</span>
 				</div>
 
 				<div class="buttons">
 					<span class="buttons-left"></span>
 					<span class="buttons-right"></span>
+					<button id="partners" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary">
+						<span class="partners"></span>
+						<span class="ui-button-text">Partners</span>
+					</button>
+					<button id="fork" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary">
+						<span class="fork"></span>
+						<span class="ui-button-text">Fork</span>
+					</button>
 				</div>
 
 			</div>
@@ -241,55 +249,55 @@
 	<!-- JS:LIB:BEGIN -->
 	<g:javascript src="libs/jquery-1.10.2.min.js" />
 	<%--<script src="js/libs/jquery-1.10.2.min.js"></script>--%>
-	<script src="js/libs/jquery-ui-1.10.3.custom.min.js"></script>
-	<script src="js/libs/dragscrollable.js"></script>
-	<script src="js/libs/jquery.hotkeys.js"></script>
-	<script src="js/libs/jquery.mousewheel.js"></script>
-	<script src="js/libs/jquery.minicolors.js"></script>
-	<script src="js/libs/jquery.tmpl.js"></script>
-	<script src="js/libs/swfobject.js"></script>
-	<script src="js/libs/downloadify.min.js"></script>
-	<script src="js/libs/events.js"></script>
+	<script src="../js/libs/jquery-ui-1.10.3.custom.min.js"></script>
+	<script src="../js/libs/dragscrollable.js"></script>
+	<script src="../js/libs/jquery.hotkeys.js"></script>
+	<script src="../js/libs/jquery.mousewheel.js"></script>
+	<script src="../js/libs/jquery.minicolors.js"></script>
+	<script src="../js/libs/jquery.tmpl.js"></script>
+	<script src="../js/libs/swfobject.js"></script>
+	<script src="../js/libs/downloadify.min.js"></script>
+	<script src="../js/libs/events.js"></script>
 
-	<script src="js/MindHub.js"></script>
-	<script src="js/Command.js"></script>
-	<script src="js/CommandRegistry.js"></script>
-	<script src="js/Action.js"></script>
-	<script src="js/Util.js"></script>
-	<script src="js/Point.js"></script>
-	<script src="js/Document.js"></script>
-	<script src="js/MindMap.js"></script>
-	<script src="js/Node.js"></script>
-	<script src="js/NodeMap.js"></script>
-	<script src="js/UndoManager.js"></script>
-	<script src="js/UndoController.js"></script>
+	<script src="../js/MindHub.js"></script>
+	<script src="../js/Command.js"></script>
+	<script src="../js/CommandRegistry.js"></script>
+	<script src="../js/Action.js"></script>
+	<script src="../js/Util.js"></script>
+	<script src="../js/Point.js"></script>
+	<script src="../js/Document.js"></script>
+	<script src="../js/MindMap.js"></script>
+	<script src="../js/Node.js"></script>
+	<script src="../js/NodeMap.js"></script>
+	<script src="../js/UndoManager.js"></script>
+	<script src="../js/UndoController.js"></script>
 	<!-- // <script src="js/ClipboardController.js"></script>
 -->
-<script src="js/ZoomController.js"></script>
-<script src="js/ShortcutController.js"></script>
+<script src="../js/ZoomController.js"></script>
+<script src="../js/ShortcutController.js"></script>
 
 <!-- // <script src="js/HelpController.js"></script>
 -->
-<script src="js/FloatPanel.js"></script>
-<script src="js/Navigator.js"></script>
-<script src="js/Inspector.js"></script>
-<script src="js/ToolBar.js"></script>
-<script src="js/StatusBar.js"></script>
+<script src="../js/FloatPanel.js"></script>
+<script src="../js/Navigator.js"></script>
+<script src="../js/Inspector.js"></script>
+<script src="../js/ToolBar.js"></script>
+<script src="../js/StatusBar.js"></script>
 
-<script src="js/CanvasDrawingTools.js"></script>
-<script src="js/CanvasView.js"></script>
-<script src="js/CanvasPresenter.js"></script>
-<script src="js/ApplicationController.js"></script>
-<script src="js/MindMapModel.js"></script>
-<script src="js/NewDocument.js"></script>
-<script src="js/OpenDocument.js"></script>
-<script src="js/SaveDocument.js"></script>
+<script src="../js/CanvasDrawingTools.js"></script>
+<script src="../js/CanvasView.js"></script>
+<script src="../js/CanvasPresenter.js"></script>
+<script src="../js/ApplicationController.js"></script>
+<script src="../js/MindMapModel.js"></script>
+<script src="../js/NewDocument.js"></script>
+<script src="../js/OpenDocument.js"></script>
+<script src="../js/SaveDocument.js"></script>
 
-<script src="js/MainViewController.js"></script>
+<script src="../js/MainViewController.js"></script>
 <!-- // <script src="js/Storage.js"></script>
 -->
-<script src="js/Event.js"></script>
-<script src="js/Notification.js"></script>
+<script src="../js/Event.js"></script>
+<script src="../js/Notification.js"></script>
 
 <!-- // <script src="js/StaticCanvas.js"></script>
 -->
@@ -297,9 +305,9 @@
 -->
 <!-- // <script src="js/ExportMap.js"></script>
 -->
-<script src="js/AutoSaveController.js"></script>
+<script src="../js/AutoSaveController.js"></script>
 
-<script src="js/FilePicker.js"></script>
+<script src="../js/FilePicker.js"></script>
 
 <!-- JS:LIB:END -->
 </body>
