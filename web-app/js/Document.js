@@ -3,6 +3,7 @@
 mindhub.Document = function() {
 	this.id = mindhub.Util.createUUID();
 	this.title = "New Map";
+	this.owner = ""
 	this.mindmap = new mindhub.MindMap();
 	this.dates = {
 		created: new Date,
@@ -13,24 +14,24 @@ mindhub.Document = function() {
 	this.autosave = false;
 };
 
-mindhub.Document.prototype.toJSON = function() {
-	var dates = {
-			created:this.dates.created.getTime()
-	};
+// mindhub.Document.prototype.toJSON = function() {
+// 	var dates = {
+// 			created:this.dates.created.getTime()
+// 	};
 	
-	if (this.dates.modified) {
-		dates.modified = this.dates.modified.getTime();
-	}
-	
-	return {
-		id:this.id,
-		title:this.title,
-		mindmap:this.mindmap,
-		dates:dates,
-		dimensions:this.dimensions,
-		autosave:this.autosave
-	};
-};
+// 	if (this.dates.modified) {
+// 		dates.modified = this.dates.modified.getTime();
+// 	}
+
+// 	return {
+// 		id:this.id,
+// 		title:this.title,
+// 		mindmap:this.mindmap,
+// 		dates:dates,
+// 		dimensions:this.dimensions,
+// 		autosave:this.autosave
+// 	};
+// };
 // update modified date and title for saving
 mindhub.Document.prototype.prepareSave = function() {
 	this.dates.modified = new Date();
@@ -71,10 +72,12 @@ mindhub.Document.prototype.toJSON = function() {
 	if (this.dates.modified) {
 		dates.modified = this.dates.modified.getTime()
 	}
-
+	// var username = '${params.user}'
+	// console.log("username: " + username)
 	return {
 		id: this.id,
 		title: this.title,
+		owner:username,
 		mindmap: this.mindmap,
 		dates: dates,
 		dimensions: this.dimensions

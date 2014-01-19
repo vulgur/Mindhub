@@ -143,7 +143,7 @@ mindhub.MindMapModel = function(eventBus, commandRegistry, undoController) {
 		}
 	};
 
-	this.saveToLoacal = function() {
+	this.saveToLocal = function() {
 		var doc = this.document.prepareSave();
 		var success = mindhub.LocalDocumentStorage.saveDocument(doc);
 		if (success) {

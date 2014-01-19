@@ -1,6 +1,6 @@
 package mindhub
 
-class MindmapUtil {
+class DocumentUtil {
 	static def fromJSON(json) {
 		Document document = new Document()
 		// id
@@ -14,7 +14,14 @@ class MindmapUtil {
 		document.setModifiedDate(modified)
 		// dimensions
 		Point dimensions = new Point(x:json.dimensions.x,y:json.dimensions.y)
-		document.setDimensions(dimensions)
+//		document.setDimensions(dimensions)
+		document.setX(dimensions.x)
+		document.setY(dimensions.y)
+		// owner
+		String ownerName = json["owner"]
+		User owner = User.findWhere(username:ownerName);
+		assert (owner)
+			document.setOwner(owner)
 		// mindmap
 		def mmJSON = json["mindmap"]
 		Mindmap mm = new Mindmap()
@@ -24,8 +31,10 @@ class MindmapUtil {
 		root.setId(rootJSON["id"])
 		root.setParent(null)
 		root.setContent(rootJSON.text.content)
-		root.setPosition(new Point(x:rootJSON.position.x, y:rootJSON.position.y))
-		
+		root.setBranchColor(rootJSON.branchColor)
+		root.setPosX(rootJSON.position.x)
+		root.setPosY(rootJSON.position.y)
+//		root.setPosition(new Point(x:rootJSON.position.x, y:rootJSON.position.y))
 		mm.nodes.add(root)
 		// TODO font, isFold, branchColor
 
@@ -36,7 +45,10 @@ class MindmapUtil {
 			node.setId(childJSON.id)
 			node.setContent(childJSON.text.content)
 			node.setParent(root)
-			node.setPosition(new Point(x:childJSON.position.x, y:childJSON.position.y))
+//			node.setPosition(new Point(x:childJSON.position.x, y:childJSON.position.y))
+			node.setBranchColor(childJSON.branchColor)
+			node.setPosX(childJSON.position.x)
+			node.setPosY(childJSON.position.y)
 			// add children to child
 			print "xxxxxx-"+childJSON.children
 //			assert childJSON.children instanceof List
@@ -61,7 +73,9 @@ class MindmapUtil {
 			node.setId(child.id)
 			node.setContent(child.text.content)
 			node.setParent(parent)
-			node.setPosition(new Point(x:child.position.x, y:child.position.y))
+//			node.setPosition(new Point(x:child.position.x, y:child.position.y))
+			node.setPosX(child.position.x)
+			node.setPosY(child.position.y)
 			mm.nodes.add(node)
 			print "zzzzzz-" + child.children
 			if (child.children.size() !=0 ) {

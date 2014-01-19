@@ -16,5 +16,7 @@ class DocumentSpec extends Specification {
     }
 
     void "test something"() {
+		Document doc = Document.findWhere(owner:"admin")
+		assert (doc)
     }
 }

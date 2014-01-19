@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="../css/app.css"/>
 	<link rel="stylesheet" href="../css/Aristo/jquery-ui-1.8.7.custom.css"/>
 	<link rel="stylesheet" href="../css/minicolors/jQuery.miniColors.css"/>
+	<link type='text/css' href='../css/osx.css' rel='stylesheet' media='screen' />
 
 	<script id="template-float-panel" type="text/x-jquery-tmpl">
 	<div class="ui-widget ui-dialog ui-corner-all ui-widget-content float-panel no-select">
@@ -197,13 +198,13 @@
 		<div id="topbar">
 			<div id="toolbar">
 				<div id="logo" class="logo-bg">
-					<span>${params.user}</span>
+					<span id="username">${params.user}</span>
 				</div>
 
 				<div class="buttons">
 					<span class="buttons-left"></span>
 					<span class="buttons-right"></span>
-					<button id="partners" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary">
+					<button id="partners" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary osx" name="osx">
 						<span class="partners"></span>
 						<span class="ui-button-text">Partners</span>
 					</button>
@@ -236,7 +237,25 @@
 		</div>
 	</div>
 
-	
+	<!-- modal content -->
+	<div id="osx-modal-content">
+		<div id="osx-modal-title">OSX Style Modal Dialog</div>
+		<div class="close">
+			<a href="#" class="simplemodal-close">x</a>
+		</div>
+		<div id="osx-modal-data">
+			<ul>
+				<g:each var="i" in="${params.partners}">
+					<li>${i.username}</li>
+				</g:each>
+			</ul>
+
+			<p>
+				<button class="simplemodal-close">Close</button>
+				<span>(or press ESC or click the overlay)</span>
+			</p>
+		</div>
+	</div>
 
 	<!-- DEBUG -->
 	<!-- set debug flag for all scripts. Will be removed in production -->
@@ -247,8 +266,9 @@
 	<!-- /DEBUG -->
 
 	<!-- JS:LIB:BEGIN -->
-	<g:javascript src="libs/jquery-1.10.2.min.js" />
-	<%--<script src="js/libs/jquery-1.10.2.min.js"></script>--%>
+	<!-- <g:javascript src="libs/jquery-1.10.2.min.js" />
+	-->
+	<script src="../js/libs/jquery-1.10.2.min.js"></script>
 	<script src="../js/libs/jquery-ui-1.10.3.custom.min.js"></script>
 	<script src="../js/libs/dragscrollable.js"></script>
 	<script src="../js/libs/jquery.hotkeys.js"></script>
@@ -258,6 +278,8 @@
 	<script src="../js/libs/swfobject.js"></script>
 	<script src="../js/libs/downloadify.min.js"></script>
 	<script src="../js/libs/events.js"></script>
+	<script src="../js/libs/jquery.simplemodal.js"></script>
+	<script src="../js/libs/osx.js"></script>
 
 	<script src="../js/MindHub.js"></script>
 	<script src="../js/Command.js"></script>
@@ -310,5 +332,19 @@
 <script src="../js/FilePicker.js"></script>
 
 <!-- JS:LIB:END -->
+<script type="text/javascript">
+	username = $('#username').text();
+	console.log("XXX:" + username);
+	// $('#fork').load(function(){
+		$('#fork').click(function() {
+			$.post("http://localhost:8080/Mindhub/document/getDoc",
+				null,
+				function(data){
+					alert(data);
+				});
+		});
+	// });
+	
+</script>
 </body>
 </html>

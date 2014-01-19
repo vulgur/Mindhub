@@ -12,6 +12,10 @@ class UserController {
 	
 	def login() {}
 	
+	def main() {
+//		redirect(uri:"/user/mainpage.gsp")
+	}
+	
 	def doLogin() {		
 		def user = User.findWhere(username:params['username'],
 			password:params['password'])

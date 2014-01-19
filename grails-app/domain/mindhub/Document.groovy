@@ -1,14 +1,17 @@
 package mindhub
 
 class Document {
+	static hasOne = [mindmap:Mindmap]
 	String id
 	String title
 	Date createdDate
 	Date modifiedDate
-	Mindmap mindmap
-	Point dimensions
+//	Mindmap mindmap
+	int x
+	int y
 	User owner
 	List partners = []
+	Document origin
     static constraints = {
     }
 }

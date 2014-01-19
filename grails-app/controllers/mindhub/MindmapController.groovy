@@ -7,6 +7,14 @@ class MindmapController {
 	
     def index() {
 		print params.user
+		// mock a document and partners list
+		Document currentDoc = new Document()
+		List partners = currentDoc.partners
+		partners.add(new User(username:"John"))
+		partners.add(new User(username:"Mary"))
+		partners.add(new User(username:"Lisa"))
+		partners.add(new User(username:"Ben"))
+		params.put("partners", partners)
 		respond params
 	}
 	
@@ -27,7 +35,7 @@ class MindmapController {
 			print it
 		}
 		
-		Document document = MindmapUtil.fromJSON(json)
+		Document document = DocumentUtil.fromJSON(json)
 		print document.id
 		print document.title
 		print document.createdDate
@@ -37,6 +45,7 @@ class MindmapController {
 		print document.mindmap.root.id
 		print document.mindmap.root.content
 		print document.mindmap.root.children.size()
+		print document.owner.username
 		print "nodes count:" + document.mindmap.nodes.size()
 		render "Saved!!!"
 	}

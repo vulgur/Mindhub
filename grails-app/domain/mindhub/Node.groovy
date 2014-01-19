@@ -1,14 +1,20 @@
 package mindhub
 
 class Node {
+	static belongsTo = Mindmap
+	static hasOne = [parent:Node]
+	static hasMany = [children:Node]
 	String id
-	Node parent
-	List children = []
+//	Node parent
+	
+//	List children = []
 	String content
 	String branchColor
 	def font = [:]
 	boolean isFold
-	Point position
+//	Point position
+	float posX
+	float posY
 	
 	void addChild(Node node) {
 		node.parent = this
