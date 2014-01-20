@@ -1,10 +1,10 @@
 package mindhub
 
 class Mindmap {
-	static belongsTo = Document
-	static hasOne = [root:Node]
-//	static hasMany = [nodes:Node]
-//	Node root
+//	static belongsTo = Document
+//	static hasOne = [root:Node]
+	static hasMany = [nodes:Node]
+	Node root
 	List nodes = []
 	void addNode(Node node){
 		nodes.add(node)

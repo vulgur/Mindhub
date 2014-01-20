@@ -198,7 +198,7 @@ mindhub.SaveDocumentPresenter = function(eventBus, mindmapModel, view, autosaveC
 //        	}
 //    });
 
-    jQuery.post("http://localhost:8080/Mindhub/document/saveDoc",
+    jQuery.post("http://localhost:8080/Mindhub/documentJSON/saveDoc",
 //    	JSON.parse(json),
 //    	JSON.stringify(json),
     	json,

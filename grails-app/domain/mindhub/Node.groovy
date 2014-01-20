@@ -1,13 +1,13 @@
 package mindhub
 
 class Node {
-	static belongsTo = Mindmap
-	static hasOne = [parent:Node]
-	static hasMany = [children:Node]
+//	static belongsTo = Mindmap
+//	static hasOne = [parent:Node]
+//	static hasMany = [children:Node]
 	String id
-//	Node parent
+	Node parent
 	
-//	List children = []
+	List children = []
 	String content
 	String branchColor
 	def font = [:]

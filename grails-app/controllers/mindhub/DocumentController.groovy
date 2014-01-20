@@ -9,7 +9,7 @@ import groovy.json.JsonSlurper
 @Transactional(readOnly = true)
 class DocumentController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [saveDoc:"POST", save: "POST", update: "PUT", delete: "DELETE"]
 	def getDoc() {
 		User user = User.findWhere(username:"test")
 		print "XXX User:" + user
@@ -52,9 +52,11 @@ class DocumentController {
 		def json = slurper.parseText(jsonString)
 		print json
 		
-		json.each {
-			print it
-		}
+		DocumentJSON docJSON = json
+		
+//		json.each {
+//			print it
+//		}
 		
 		Document document = DocumentUtil.fromJSON(json)
 		print document.id
@@ -66,8 +68,9 @@ class DocumentController {
 		print document.mindmap.root.children.size()
 		print document.owner.username
 		print "nodes count:" + document.mindmap.nodes.size()
-		save(document)
-		render "Saved!!!"
+//		redirect (controller:'documentJSON', action:'save', params:[documentJSONInstance:docJSON])
+		chain (controller:'documentJSON', action:'save', model:[documentJSONInstance:docJSON])
+//		render "Saved!!!"
 	}
     @Transactional
     def save(Document documentInstance) {
