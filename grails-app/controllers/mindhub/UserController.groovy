@@ -4,6 +4,7 @@ package mindhub
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import groovy.json.JsonSlurper
 
 @Transactional(readOnly = true)
 class UserController {
@@ -13,7 +14,20 @@ class UserController {
 	def login() {}
 	
 	def main() {
-//		redirect(uri:"/user/mainpage.gsp")
+		def owner = User.findByUsername(params.user)
+		def results = DocumentJSON.findAllByOwner(owner)
+		print "main: result size:" + results.size()
+		List docList = []
+		for (docJSON in results) {
+			String jsonString = docJSON.json
+			def slurper = new JsonSlurper()
+			def json = slurper.parseText(jsonString)
+			Document doc = DocumentUtil.fromJSON(json)
+//			DocumentUtil.printDocument(doc)
+			docList.add(doc)
+		}
+		print "main: docList size:" + docList.size()
+		[docList:docList]
 	}
 	
 	def doLogin() {		
@@ -22,7 +36,8 @@ class UserController {
 		if (user) {
 			session.user = user
 			print user
-			redirect(controller:"mindmap", params:[user:user.username])
+			redirect(action:'main', params:[user:user.username])
+//			redirect(controller:"mindmap", params:[user:user.username])
 //			redirect(uri:"index.gsp")
 //			redirect(uri: "/main/index")
 		} else {

@@ -21,21 +21,13 @@ class DocumentJSONController {
 		
 		def slurper = new JsonSlurper()
 		def json = slurper.parseText(jsonString)
-		print json
+		print "saveDoc: json:" + json
 		
 		DocumentJSON docJSON = new DocumentJSON()
-		
-		Document document = DocumentUtil.fromJSON(json)
-//		print document.id
-//		print document.title
-//		print document.createdDate
-//		print document.modifiedDate
-//		print document.mindmap.root.id
-//		print document.mindmap.root.content
-//		print document.mindmap.root.children.size()
-//		print document.owner.username
-//		print "nodes count:" + document.mindmap.nodes.size()
 		docJSON.json = json
+		Document document = DocumentUtil.fromJSON(json)
+
+		docJSON.json = jsonString
 		docJSON.owner = document.owner
 		// TODO partners and origin of docJSON
 		save(docJSON)

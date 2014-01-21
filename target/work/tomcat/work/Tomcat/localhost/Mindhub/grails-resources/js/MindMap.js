@@ -59,3 +59,18 @@ mindhub.MindMap.prototype.toJSON = function() {
 mindhub.MindMap.prototype.serialize = function() {
 	return JSON.stringify(this);
 };
+
+mindhub.MindMap.fromJSON = function(json) {
+	return mindhub.MindMap.fromObject(JSON.parse(json));
+};
+
+mindhub.MindMap.fromObject = function(obj) {
+	var root = mindhub.Node.fromObject(obj.root);
+	var mm = new mindhub.MindMap(root);
+
+	root.forEachDescendant(function(descendant) {
+		mm.addNode(descendant);
+	});
+
+	return mm;
+};

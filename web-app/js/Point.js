@@ -17,3 +17,7 @@ mindhub.Point.prototype.toString = function() {
 mindhub.Point.prototype.clone = function() {
 	return new Point(this.x, this.y);
 };
+
+mindhub.Point.fromObject = function(obj) {
+	return new mindhub.Point(obj.x, obj.y);
+};

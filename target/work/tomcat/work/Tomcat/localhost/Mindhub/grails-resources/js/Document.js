@@ -4,6 +4,7 @@ mindhub.Document = function() {
 	this.id = mindhub.Util.createUUID();
 	this.title = "New Map";
 	this.owner = ""
+	this.partners = []
 	this.mindmap = new mindhub.MindMap();
 	this.dates = {
 		created: new Date,
@@ -32,6 +33,26 @@ mindhub.Document = function() {
 // 		autosave:this.autosave
 // 	};
 // };
+
+mindhub.Document.fromJSON = function(json) {
+	return mindhub.Document.fromObject(JSON.parse(json))
+};
+
+mindhub.Document.fromObject = function(obj) {
+	var doc = new mindhub.Document();
+	doc.id = obj.id;
+	doc.title = obj.title;
+	doc.mindmap = mindhub.MindMap.fromObject(obj.mindmap);
+	doc.dates = {
+		created: new Date(obj.dates.created),
+		modified: obj.dates.modified ? new Date(obj.dates.modified) : null
+	};
+	doc.dimensions = mindhub.Point.fromObject(obj.dimensions);
+	doc.autosave = obj.autosave;
+	doc.partners = obj.partners;
+
+	return doc;
+};
 // update modified date and title for saving
 mindhub.Document.prototype.prepareSave = function() {
 	this.dates.modified = new Date();

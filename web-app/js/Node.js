@@ -124,3 +124,23 @@ mindhub.Node.prototype.toJSON = function() {
 mindhub.Node.prototype.serialize = function() {
 	return JSON.stringify(this);
 };
+
+mindhub.Node.fromJSON = function(json) {
+	return mindhub.Node.fromObject(JSON.parse(json));
+};
+
+mindhub.Node.fromObject = function(obj) {
+	var node = new mindhub.Node();
+	node.id = obj.id;
+	node.text = obj.text;
+	node.position = mindhub.Point.fromObject(obj.position);
+	node.isFold = obj.isFold;
+	node.branchColor = obj.branchColor;
+
+	obj.children.forEach(function(child){
+		var childNode = mindhub.Node.fromObject(child);
+		node.addChild(childNode);
+	});
+
+	return node;
+};

@@ -1,5 +1,7 @@
 package mindhub
 
+import groovy.json.JsonSlurper
+
 class DocumentUtil {
 	static def fromJSON(json) {
 		Document document = new Document()
@@ -130,5 +132,17 @@ class DocumentUtil {
 		for (node in nodes) {
 			if (node.id == key) return node
 		}
+	}
+	
+	static void printDocument(document) {
+		print document.id
+		print document.title
+		print document.createdDate
+		print document.modifiedDate
+		print document.mindmap.root.id
+		print document.mindmap.root.content
+		print document.mindmap.root.children.size()
+		print document.owner.username
+		print "nodes count:" + document.mindmap.nodes.size()
 	}
 }

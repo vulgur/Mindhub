@@ -39,39 +39,7 @@ class DocumentController {
         respond new Document(params)
     }
 
-	def saveDoc() {
-		print "got here!"
-
-		def jsonString
-		
-		params.each {key, value ->
-			if(key!="action" && key!="controller" && key!="format") jsonString = key
-		}
-		
-		def slurper = new JsonSlurper()
-		def json = slurper.parseText(jsonString)
-		print json
-		
-		DocumentJSON docJSON = json
-		
-//		json.each {
-//			print it
-//		}
-		
-		Document document = DocumentUtil.fromJSON(json)
-		print document.id
-		print document.title
-		print document.createdDate
-		print document.modifiedDate
-		print document.mindmap.root.id
-		print document.mindmap.root.content
-		print document.mindmap.root.children.size()
-		print document.owner.username
-		print "nodes count:" + document.mindmap.nodes.size()
-//		redirect (controller:'documentJSON', action:'save', params:[documentJSONInstance:docJSON])
-		chain (controller:'documentJSON', action:'save', model:[documentJSONInstance:docJSON])
-//		render "Saved!!!"
-	}
+	
     @Transactional
     def save(Document documentInstance) {
         if (documentInstance == null) {

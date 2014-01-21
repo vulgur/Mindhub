@@ -1,3 +1,4 @@
+<%@ page import="mindhub.Document" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,15 +27,56 @@
 <body>
 	<!-- Nav tabs -->
 	<ul class="nav nav-pills nav-justified">
-		<li class="active"><a href="#home" data-toggle="pill">My mindmaps</a></li>
+		<li class="active"><a href="#home" data-toggle="pill">My
+				mindmaps</a></li>
 		<li><a href="#browse" data-toggle="pill">Browse mindmaps</a></li>
 		<li><a href="#messages" data-toggle="pill">Messages</a></li>
 		<li><a href="#about" data-toggle="pill">About</a></li>
 	</ul>
 	<!-- Tab panes -->
 	<div class="tab-content">
-		<div class="tab-pane fade in active" id="home">home</div>
-		<div class="tab-pane fade" id="browse">profile</div>
+		<div class="tab-pane fade in active" id="home">
+			Count of Documents: ${docList.size()}
+			<table class="table table-hover">
+				<thead>
+					<th>Title</th>
+					<th>Created Date</th>
+					<th>Partners</th>
+					<th>Actions</th>
+				</thead>
+				<tbody>
+					<g:each status="i" in="${docList}" var="doc">
+						<tr>
+							<td>
+								${doc.title}
+							</td>
+							<td>
+								${doc.createdDate}
+							</td>
+							<td>
+								${doc.partners}
+							</td>
+							<td>
+								<g:link>	Edit	</g:link>
+								|
+								<g:link>	Delete</g:link>
+							</td>
+						</tr>
+					</g:each>
+				</tbody>
+			</table>
+		</div>
+		<div class="tab-pane fade" id="browse">
+			<thead>
+				<th>Title</th>
+				<th>Created Date</th>
+				<th>Partners</th>
+				<th>Actions</th>
+			</thead>
+			<tbody>
+
+			</tbody>
+		</div>
 		<div class="tab-pane fade" id="messages">messages</div>
 		<div class="tab-pane fade" id="about">settings</div>
 	</div>
