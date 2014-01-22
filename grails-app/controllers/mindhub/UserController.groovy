@@ -27,7 +27,7 @@ class UserController {
 			docList.add(doc)
 		}
 		print "main: docList size:" + docList.size()
-		[docList:docList]
+		[docList:docList,username:owner.username]
 	}
 	
 	def doLogin() {		

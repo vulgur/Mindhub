@@ -23,10 +23,11 @@ class DocumentJSONController {
 		def json = slurper.parseText(jsonString)
 		print "saveDoc: json:" + json
 		
+		Document document = DocumentUtil.fromJSON(json)
+		
 		DocumentJSON docJSON = new DocumentJSON()
 		docJSON.json = json
-		Document document = DocumentUtil.fromJSON(json)
-
+		docJSON.docId = document.id
 		docJSON.json = jsonString
 		docJSON.owner = document.owner
 		// TODO partners and origin of docJSON

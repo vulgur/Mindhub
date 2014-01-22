@@ -26,6 +26,18 @@ class DocumentController {
 		print "nodes count:" + document.mindmap.nodes.size()
 		render "Get~~~"
 	}
+	
+	def getDocumentById() {
+		print "Document Controller: getDocument() -- docId="+params.docId
+		String docId = params.docId
+		DocumentJSON docJSON = DocumentJSON.findWhere(docId:docId)
+		if (docJSON) {
+			print "Document Controller: getDocument() -- get the doc";
+			print "Document Controller: getDocument() -- json="+docJSON.json
+			render docJSON.json
+		}
+		render null
+	}
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Document.list(params), model:[documentInstanceCount: Document.count()]

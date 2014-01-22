@@ -11,7 +11,8 @@ mindhub.ApplicationController = function() {
 	//var filePicker
 	var autosaveController = new mindhub.AutoSaveController(eventBus, mindmapModel);
   	var filePicker = new mindhub.FilePicker(eventBus, mindmapModel);
-
+  	var docId = $('#docId').val();
+  	
 	function doNewDocument() {
 		// close old doc first
 		var doc = mindmapModel.getDocument();
@@ -41,6 +42,11 @@ mindhub.ApplicationController = function() {
 		presenter.go;
 	}
 
+	function doOpenDocumentJSON() {
+		var presenter = new mindhub.OpenDocumentJSONPresenter(eventBus,
+				mindmapModel, new mindhub.OpenDocumentJSONView(), docId);
+		presenter.go();
+	}
 	// function doExportDocument(){}
 
 	this.init = function() {
@@ -76,8 +82,11 @@ mindhub.ApplicationController = function() {
 	this.go = function() {
 		var viewController = new mindhub.MainViewController(eventBus, mindmapModel, commandRegistry);
 		viewController.go();
-
-		doNewDocument();
+		if (docId) {
+			doOpenDocumentJSON();
+		} else {
+			doNewDocument();
+		}
 	};
 
 	this.init();

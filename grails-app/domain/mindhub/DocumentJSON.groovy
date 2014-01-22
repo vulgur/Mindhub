@@ -1,6 +1,7 @@
 package mindhub
 
 class DocumentJSON {
+	String docId
 	String json
 	User owner
 	List partners = []

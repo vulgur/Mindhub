@@ -47,7 +47,7 @@ mindhub.CanvasView = function() {
 
 		this.scroll(left, top);
 
-		var backgroundSize = parseFloat(arae.css("background-size"));
+		var backgroundSize = parseFloat(area.css("background-size"));
 		if (isNaN(backgroundSize)) {
 			console.warn("Could not set background-size!!!");
 		}

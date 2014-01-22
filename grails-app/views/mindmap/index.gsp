@@ -199,6 +199,7 @@
 			<div id="toolbar">
 				<div id="logo" class="logo-bg">
 					<span id="username">${params.user}</span>
+					<input id="docId" type="hidden" value="${params.docId }" />
 				</div>
 
 				<div class="buttons">
@@ -314,7 +315,7 @@
 <script src="../js/NewDocument.js"></script>
 <script src="../js/OpenDocument.js"></script>
 <script src="../js/SaveDocument.js"></script>
-
+<script src="../js/OpenDocumentJSON.js"></script>
 <script src="../js/MainViewController.js"></script>
 <!-- // <script src="js/Storage.js"></script>
 -->

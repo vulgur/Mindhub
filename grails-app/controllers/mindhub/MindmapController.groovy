@@ -6,7 +6,8 @@ class MindmapController {
 	static layout = ""
 	
     def index() {
-		print params.user
+		print "MindmapController index() params.user=" + params.user
+		print "MindmapController index() params.docId=" +params.docId
 		// mock a document and partners list
 		Document currentDoc = new Document()
 		List partners = currentDoc.partners

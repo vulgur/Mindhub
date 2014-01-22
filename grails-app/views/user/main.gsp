@@ -37,6 +37,10 @@
 	<div class="tab-content">
 		<div class="tab-pane fade in active" id="home">
 			Count of Documents: ${docList.size()}
+			<span>
+			<g:link controller="mindmap" params="[user:username]">Create new MindMap</g:link>
+			</span>
+			
 			<table class="table table-hover">
 				<thead>
 					<th>Title</th>
@@ -57,7 +61,7 @@
 								${doc.partners}
 							</td>
 							<td>
-								<g:link>	Edit	</g:link>
+								<g:link controller="mindmap" params="[user:username, docId:doc.id]">	Edit	</g:link>
 								|
 								<g:link>	Delete</g:link>
 							</td>
