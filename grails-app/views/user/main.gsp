@@ -1,4 +1,4 @@
-<%@ page import="mindhub.Document" %>
+<%@ page import="mindhub.Document"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,11 +36,11 @@
 	<!-- Tab panes -->
 	<div class="tab-content">
 		<div class="tab-pane fade in active" id="home">
-			Count of Documents: ${docList.size()}
-			<span>
-			<g:link controller="mindmap" params="[user:username]">Create new MindMap</g:link>
+			Count of Documents:
+			${myDocList.size()}
+			<span> <g:link controller="mindmap" params="[username:username]">Create new MindMap</g:link>
 			</span>
-			
+
 			<table class="table table-hover">
 				<thead>
 					<th>Title</th>
@@ -49,7 +49,7 @@
 					<th>Actions</th>
 				</thead>
 				<tbody>
-					<g:each status="i" in="${docList}" var="doc">
+					<g:each status="i" in="${myDocList}" var="doc">
 						<tr>
 							<td>
 								${doc.title}
@@ -60,26 +60,48 @@
 							<td>
 								${doc.partners}
 							</td>
-							<td>
-								<g:link controller="mindmap" params="[user:username, docId:doc.id]">	Edit	</g:link>
-								|
-								<g:link>	Delete</g:link>
-							</td>
+							<td><g:link controller="mindmap"
+									params="[username:username, docId:doc.id, isOrigin:true]">	Edit	</g:link>
+								| <g:link>	Delete</g:link></td>
 						</tr>
 					</g:each>
 				</tbody>
 			</table>
 		</div>
-		<div class="tab-pane fade" id="browse">
-			<thead>
-				<th>Title</th>
-				<th>Created Date</th>
-				<th>Partners</th>
-				<th>Actions</th>
-			</thead>
-			<tbody>
 
-			</tbody>
+		<div class="tab-pane fade" id="browse">
+			Count of Documents:
+			${allDocList.size()}
+			<table class="table table-hover">
+				<thead>
+					<th>Title</th>
+					<th>Created Date</th>
+					<th>Owner</th>
+					<th>Partners</th>
+					<th>Actions</th>
+				</thead>
+				<tbody>
+					<g:each status="i" in="${allDocList}" var="doc">
+						<tr>
+							<td>
+								${doc.title}
+							</td>
+							<td>
+								${doc.createdDate}
+							</td>
+							<td>
+								${doc.owner.username }
+							</td>
+							<td>
+								${doc.partners}
+							</td>
+							<td><g:link controller="mindmap" action="fork"
+									params="[username:username, originDocId:doc.id, isOrigin:false]">Fork</g:link>
+							</td>
+						</tr>
+					</g:each>
+				</tbody>
+			</table>
 		</div>
 		<div class="tab-pane fade" id="messages">messages</div>
 		<div class="tab-pane fade" id="about">settings</div>

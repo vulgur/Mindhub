@@ -4,7 +4,17 @@ import groovy.json.JsonSlurper
 
 class MindmapController {
 	static layout = ""
-	
+	def fork() {
+		String originDocId = params.originDocId
+		String username = params.username
+		def originDocJSON = DocumentJSON.findWhere(docId:originDocId)
+		originDocJSON.partners.add(username)
+		originDocJSON.save()
+		def partners = originDocJSON.partners
+		params.put("partners", partners)
+		print params
+		respond params
+	}
     def index() {
 		print "MindmapController index() params.user=" + params.user
 		print "MindmapController index() params.docId=" +params.docId

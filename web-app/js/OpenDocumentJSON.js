@@ -15,12 +15,7 @@ mindhub.OpenDocumentJSONPresenter = function(eventBus, mindmapModel, view, id) {
 			  },
 			  async:false
 			});
-//		$.post(url, {
-//			docId : id
-//		}, function(data) {
-//			// console.log("Open Doc JSON: data= " + data);
-//			json = data
-//		});
+
 		return json;
 	}
 

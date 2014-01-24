@@ -250,7 +250,7 @@
 			<ul>
 				<g:each var="i" in="${params.partners}">
 					<li>
-						${i.username}
+						${i}
 					</li>
 				</g:each>
 			</ul>
@@ -344,8 +344,10 @@
 	<script type="text/javascript">
 		username = $('#username').val();
 		originDocId = $('#originDocId').val();
+		isOrigin = $('#isOrigin').val();
 		console.log("USERNAME:" + username);
 		console.log("ORIGIN_DOCUMENT_ID:"+originDocId);
+		console.log("IS_ORIGIN:"+isOrigin);
 	</script>
 </body>
 </html>

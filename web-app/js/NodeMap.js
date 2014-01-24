@@ -19,7 +19,7 @@ mindhub.NodeMap.prototype.add = function(node) {
 };
 
 mindhub.NodeMap.prototype.remove = function(node) {
-	if (!this.nodes.hasOwnProperty(node.id)) {
+	if (this.nodes.hasOwnProperty(node.id)) {
 		delete this.nodes[node.id];
 		this.count--
 		return true;

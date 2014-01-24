@@ -58,6 +58,7 @@ mindhub.MindMapModel = function(eventBus, commandRegistry, undoController) {
 		var map = this.getMindMap();
 		var action = new mindhub.action.DeleteNodeAction(node, map);
 		this.executeAction(action);
+		console.log("MMM - DeleteNode:"+node.text.content);
 	};
 
 	this.createNode = function(node, parent) {

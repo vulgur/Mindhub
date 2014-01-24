@@ -9,132 +9,148 @@ import groovy.json.JsonSlurper
 @Transactional(readOnly = true)
 class UserController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-	
-	def login() {}
-	
+	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
+	def login() {
+
+	}
+
 	def main() {
 		def owner = User.findByUsername(params.user)
-		def results = DocumentJSON.findAllByOwner(owner)
-		print "main: result size:" + results.size()
-		List docList = []
+		def results = DocumentJSON.findAll()
+		List myDocList = []
+		List allDocList = []
 		for (docJSON in results) {
 			String jsonString = docJSON.json
 			def slurper = new JsonSlurper()
 			def json = slurper.parseText(jsonString)
 			Document doc = DocumentUtil.fromJSON(json)
-//			DocumentUtil.printDocument(doc)
-			docList.add(doc)
+			if (doc.owner.username == owner.username) {
+				myDocList.add(doc)
+			} else {
+				allDocList.add(doc)
+			}
 		}
-		print "main: docList size:" + docList.size()
-		[docList:docList,username:owner.username]
+		[myDocList:myDocList, allDocList:allDocList, username:owner.username]
 	}
-	
-	def doLogin() {		
+
+	def doLogin() {
 		def user = User.findWhere(username:params['username'],
-			password:params['password'])
+		password:params['password'])
 		if (user) {
 			session.user = user
 			print user
 			redirect(action:'main', params:[user:user.username])
-//			redirect(controller:"mindmap", params:[user:user.username])
-//			redirect(uri:"index.gsp")
-//			redirect(uri: "/main/index")
+			//			redirect(controller:"mindmap", params:[user:user.username])
+			//			redirect(uri:"index.gsp")
+			//			redirect(uri: "/main/index")
 		} else {
 			print "cannot found"
 			redirect(controller:'user',action:'login')
 		}
 	}
-	
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond User.list(params), model:[userInstanceCount: User.count()]
-    }
 
-    def show(User userInstance) {
-        respond userInstance
-    }
+	def index(Integer max) {
+		params.max = Math.min(max ?: 10, 100)
+		respond User.list(params), model:[userInstanceCount: User.count()]
+	}
 
-    def create() {
-        respond new User(params)
-    }
+	def show(User userInstance) {
+		respond userInstance
+	}
 
-    @Transactional
-    def save(User userInstance) {
-        if (userInstance == null) {
-            notFound()
-            return
-        }
+	def create() {
+		respond new User(params)
+	}
 
-        if (userInstance.hasErrors()) {
-            respond userInstance.errors, view:'create'
-            return
-        }
+	@Transactional
+	def save(User userInstance) {
+		if (userInstance == null) {
+			notFound()
+			return
+		}
 
-        userInstance.save flush:true
+		if (userInstance.hasErrors()) {
+			respond userInstance.errors, view:'create'
+			return
+		}
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'userInstance.label', default: 'User'), userInstance.id])
-                redirect userInstance
-            }
-            '*' { respond userInstance, [status: CREATED] }
-        }
-    }
+		userInstance.save flush:true
 
-    def edit(User userInstance) {
-        respond userInstance
-    }
+		request.withFormat {
+			form {
+				flash.message = message(code: 'default.created.message', args: [
+					message(code: 'userInstance.label', default: 'User'),
+					userInstance.id
+				])
+				redirect userInstance
+			}
+			'*' { respond userInstance, [status: CREATED] }
+		}
+	}
 
-    @Transactional
-    def update(User userInstance) {
-        if (userInstance == null) {
-            notFound()
-            return
-        }
+	def edit(User userInstance) {
+		respond userInstance
+	}
 
-        if (userInstance.hasErrors()) {
-            respond userInstance.errors, view:'edit'
-            return
-        }
+	@Transactional
+	def update(User userInstance) {
+		if (userInstance == null) {
+			notFound()
+			return
+		}
 
-        userInstance.save flush:true
+		if (userInstance.hasErrors()) {
+			respond userInstance.errors, view:'edit'
+			return
+		}
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'User.label', default: 'User'), userInstance.id])
-                redirect userInstance
-            }
-            '*'{ respond userInstance, [status: OK] }
-        }
-    }
+		userInstance.save flush:true
 
-    @Transactional
-    def delete(User userInstance) {
+		request.withFormat {
+			form {
+				flash.message = message(code: 'default.updated.message', args: [
+					message(code: 'User.label', default: 'User'),
+					userInstance.id
+				])
+				redirect userInstance
+			}
+			'*'{ respond userInstance, [status: OK] }
+		}
+	}
 
-        if (userInstance == null) {
-            notFound()
-            return
-        }
+	@Transactional
+	def delete(User userInstance) {
 
-        userInstance.delete flush:true
+		if (userInstance == null) {
+			notFound()
+			return
+		}
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'User.label', default: 'User'), userInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
+		userInstance.delete flush:true
 
-    protected void notFound() {
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'userInstance.label', default: 'User'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
+		request.withFormat {
+			form {
+				flash.message = message(code: 'default.deleted.message', args: [
+					message(code: 'User.label', default: 'User'),
+					userInstance.id
+				])
+				redirect action:"index", method:"GET"
+			}
+			'*'{ render status: NO_CONTENT }
+		}
+	}
+
+	protected void notFound() {
+		request.withFormat {
+			form {
+				flash.message = message(code: 'default.not.found.message', args: [
+					message(code: 'userInstance.label', default: 'User'),
+					params.id
+				])
+				redirect action: "index", method: "GET"
+			}
+			'*'{ render status: NOT_FOUND }
+		}
+	}
 }

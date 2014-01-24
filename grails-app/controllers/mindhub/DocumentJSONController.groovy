@@ -24,15 +24,26 @@ class DocumentJSONController {
 		print "saveDoc: json:" + json
 		
 		Document document = DocumentUtil.fromJSON(json)
-		
+		print ("DocumentJSONController savDoc - node count="+document.mindmap.nodes.size())
 		DocumentJSON docJSON = new DocumentJSON()
 		docJSON.json = json
 		docJSON.docId = document.id
 		docJSON.json = jsonString
 		docJSON.owner = document.owner
 		// TODO partners and origin of docJSON
-		save(docJSON)
-		render "Saved!!!"
+		
+		// save or update
+		def found = DocumentJSON.findByDocId(docJSON.docId)
+		if (found){
+			found.json = docJSON.json
+			print ("DocumentJSONController savDoc - found.json=" + found.json)
+			if (update(found)) render "Updated!!!"
+			else render "update failed!!!"
+		} else {
+			if (save(docJSON)) render "Saved!!!"
+			else render "save failed!!!"
+		}
+		
 	}
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -51,12 +62,12 @@ class DocumentJSONController {
     def save(DocumentJSON documentJSONInstance) {
         if (documentJSONInstance == null) {
             notFound()
-            return
+            return false
         }
 
         if (documentJSONInstance.hasErrors()) {
-            respond documentJSONInstance.errors, view:'create'
-            return
+//            respond documentJSONInstance.errors, view:'create'
+            return false
         }
 
         documentJSONInstance.save flush:true
@@ -68,7 +79,7 @@ class DocumentJSONController {
 //            }
 //            '*' { respond documentJSONInstance, [status: CREATED] }
 //        }
-		render "saved!!!"
+		return true
     }
 
     def edit(DocumentJSON documentJSONInstance) {
@@ -79,23 +90,24 @@ class DocumentJSONController {
     def update(DocumentJSON documentJSONInstance) {
         if (documentJSONInstance == null) {
             notFound()
-            return
+            return false
         }
 
         if (documentJSONInstance.hasErrors()) {
-            respond documentJSONInstance.errors, view:'edit'
-            return
+//            respond documentJSONInstance.errors, view:'edit'
+            return false
         }
 
         documentJSONInstance.save flush:true
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'DocumentJSON.label', default: 'DocumentJSON'), documentJSONInstance.id])
-                redirect documentJSONInstance
-            }
-            '*'{ respond documentJSONInstance, [status: OK] }
-        }
+//        request.withFormat {
+//            form {
+//                flash.message = message(code: 'default.updated.message', args: [message(code: 'DocumentJSON.label', default: 'DocumentJSON'), documentJSONInstance.id])
+//                redirect documentJSONInstance
+//            }
+//            '*'{ respond documentJSONInstance, [status: OK] }
+//        }
+		return true
     }
 
     @Transactional

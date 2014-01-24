@@ -10,9 +10,10 @@ mindhub.ApplicationController = function() {
 	//var autosaveController
 	//var filePicker
 	var autosaveController = new mindhub.AutoSaveController(eventBus, mindmapModel);
-  	var filePicker = new mindhub.FilePicker(eventBus, mindmapModel);
-  	var docId = $('#docId').val();
-  	
+	var filePicker = new mindhub.FilePicker(eventBus, mindmapModel);
+	var docId = $('#docId').val();
+	var isOrigin = $('#isOrigin').val();
+
 	function doNewDocument() {
 		// close old doc first
 		var doc = mindmapModel.getDocument();
@@ -43,8 +44,16 @@ mindhub.ApplicationController = function() {
 	}
 
 	function doOpenDocumentJSON() {
-		var presenter = new mindhub.OpenDocumentJSONPresenter(eventBus,
+		if (isOrigin == true) {
+			var presenter = new mindhub.OpenDocumentJSONPresenter(eventBus,
 				mindmapModel, new mindhub.OpenDocumentJSONView(), docId);
+		} else {
+			var originDocId = $('#originDocId').val();
+			console.log("AC - doOpenDocumentJSON: originDocId=" + originDocId);
+			var presenter = new mindhub.OpenDocumentJSONPresenter(eventBus,
+				mindmapModel, new mindhub.OpenDocumentJSONView(), originDocId);
+		}
+
 		presenter.go();
 	}
 	// function doExportDocument(){}
@@ -82,10 +91,13 @@ mindhub.ApplicationController = function() {
 	this.go = function() {
 		var viewController = new mindhub.MainViewController(eventBus, mindmapModel, commandRegistry);
 		viewController.go();
-		if (docId) {
-			doOpenDocumentJSON();
-		} else {
+		console.log("AC - doOpenDocumentJSON: isOrigin=" + isOrigin);
+		if (isOrigin == true) {
+			console.log("doNewDocument");
 			doNewDocument();
+		} else {
+			console.log("doOpenDocumentJSON");
+			doOpenDocumentJSON();
 		}
 	};
 

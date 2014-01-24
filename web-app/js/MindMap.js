@@ -25,7 +25,11 @@ mindhub.MindMap.prototype.addNode = function(node) {
 mindhub.MindMap.prototype.deleteNode = function(node) {
 	var parent = node.parent;
 	parent.deleteChild(node);
-	this.nodeMap.remove(node);
+	if(this.nodeMap.remove(node)) {
+		console.log("MindMap - DeleteNode:success");
+	} else {
+		console.log("MindMap - DeleteNode:failed");
+	}
 };
 
 mindhub.MindMap.prototype.getRoot = function() {

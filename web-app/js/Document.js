@@ -10,7 +10,7 @@ mindhub.Document = function() {
 		created: new Date,
 		modified: null
 	};
-
+	this.originDocId = "";
 	this.dimensions = new mindhub.Point(4000, 2000);
 	this.autosave = false;
 };
@@ -35,7 +35,7 @@ mindhub.Document = function() {
 // };
 
 mindhub.Document.fromJSON = function(json) {
-	return mindhub.Document.fromObject(JSON.parse(json))
+	return mindhub.Document.fromObject(JSON.parse(json));
 };
 
 mindhub.Document.fromObject = function(obj) {
@@ -93,12 +93,18 @@ mindhub.Document.prototype.toJSON = function() {
 	if (this.dates.modified) {
 		dates.modified = this.dates.modified.getTime()
 	}
+
+	var isOrigin = $('#isOrigin').val();
+	if (!isOrigin) {
+		this.id = mindhub.Util.createUUID();
+	}
 	// var username = '${params.user}'
-	// console.log("username: " + username)
+	console.log("username: " + username)
 	return {
 		id: this.id,
 		title: this.title,
 		owner:username,
+		originDocId: $('#originDocId').val(),
 		mindmap: this.mindmap,
 		dates: dates,
 		dimensions: this.dimensions

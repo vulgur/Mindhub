@@ -182,31 +182,15 @@ mindhub.SaveDocumentPresenter = function(eventBus, mindmapModel, view, autosaveC
   };
 
   this.go = function() {
-    console.log(mindmapModel.getMindMap().getRoot().getContent() + ".json");
+    // console.log(mindmapModel.getMindMap().getRoot().getContent() + ".json");
     var doc = mindmapModel.getDocument();
     var json = doc.prepareSave().serialize();
     console.log(json);
-    
-//    jQuery.ajax({
-//    		type:"POST",
-//    		dataType:"json",
-//    		url:"http://localhost:8080/Mindhub/main/save",
-//    		//contentType:"application/json",
-//    		data:json,
-//    		success:function(data){
-//        		alert("Data: "+data);
-//        	}
-//    });
 
     jQuery.post("http://localhost:8080/Mindhub/documentJSON/saveDoc",
-//    	JSON.parse(json),
-//    	JSON.stringify(json),
     	json,
     	function(data){
-    		alert("Data: "+data);
+    		alert(data);
     	});
-    
-    // view.setAutoSaveCheckboxState(autosaveController.isEnabled());
-    // view.showSaveDialog();
   };
 };
