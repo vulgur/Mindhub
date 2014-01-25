@@ -38,7 +38,7 @@
 		<div class="tab-pane fade in active" id="home">
 			Count of Documents:
 			${myDocList.size()}
-			<span> <g:link controller="mindmap" params="[username:username]">Create new MindMap</g:link>
+			<span> <g:link controller="mindmap" action="create" params="[isOrigin:true, username:username]">Create new MindMap</g:link>
 			</span>
 
 			<table class="table table-hover">
@@ -60,9 +60,9 @@
 							<td>
 								${doc.partners}
 							</td>
-							<td><g:link controller="mindmap"
-									params="[username:username, docId:doc.id, isOrigin:true]">	Edit	</g:link>
-								| <g:link>	Delete</g:link></td>
+							<td><g:link controller="mindmap" action="edit"
+									params="[username:username, docId:doc.id, isOrigin:true]">Edit</g:link>
+								| <g:link>Delete</g:link></td>
 						</tr>
 					</g:each>
 				</tbody>

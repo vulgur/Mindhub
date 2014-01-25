@@ -23,7 +23,9 @@ class DocumentUtil {
 		String ownerName = json["owner"]
 		User owner = User.findWhere(username:ownerName);
 		assert (owner)
-			document.setOwner(owner)
+		document.setOwner(owner)
+		// origin doc id
+		document.setOriginDocId(json["originDocId"])
 		// mindmap
 		def mmJSON = json["mindmap"]
 		Mindmap mm = new Mindmap()
@@ -52,7 +54,7 @@ class DocumentUtil {
 			node.setPosX(childJSON.position.x)
 			node.setPosY(childJSON.position.y)
 			// add children to child
-			print "xxxxxx-"+childJSON.children
+//			print "xxxxxx-"+childJSON.children
 //			assert childJSON.children instanceof List
 			addChildren(childJSON.children, node, mm)
 			// add to root and mindmap
@@ -70,7 +72,7 @@ class DocumentUtil {
 			return
 		}
 		for (child in json) {
-			print "yyyyyy-" + child
+//			print "yyyyyy-" + child
 			Node node = new Node()
 			node.setId(child.id)
 			node.setContent(child.text.content)
@@ -79,7 +81,7 @@ class DocumentUtil {
 			node.setPosX(child.position.x)
 			node.setPosY(child.position.y)
 			mm.nodes.add(node)
-			print "zzzzzz-" + child.children
+//			print "zzzzzz-" + child.children
 			if (child.children.size() !=0 ) {
 				addChilren(child.children, node)
 			}

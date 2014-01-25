@@ -342,9 +342,11 @@
 
 	<!-- JS:LIB:END -->
 	<script type="text/javascript">
+		docId = $('#docId').val();
 		username = $('#username').val();
 		originDocId = $('#originDocId').val();
 		console.log("USERNAME:" + username);
+		console.log("DOCUMENT_ID:"+docId);
 		console.log("ORIGIN_DOCUMENT_ID:"+originDocId);
 	</script>
 </body>

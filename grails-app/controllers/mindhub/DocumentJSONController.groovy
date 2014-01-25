@@ -11,13 +11,12 @@ class DocumentJSONController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 	def saveDoc() {
-		print "got here!"
-
-		def jsonString
-		
-		params.each {key, value ->
-			if(key!="action" && key!="controller" && key!="format") jsonString = key
-		}
+		print "-------------\n" + params
+		def jsonString = params.data
+		print "saveDoc: jsonString=" + jsonString
+//		params.each {key, value ->
+//			if(key!="action" && key!="controller" && key!="format") jsonString = key
+//		}
 		
 		def slurper = new JsonSlurper()
 		def json = slurper.parseText(jsonString)
@@ -26,15 +25,21 @@ class DocumentJSONController {
 		Document document = DocumentUtil.fromJSON(json)
 		print ("DocumentJSONController savDoc - node count="+document.mindmap.nodes.size())
 		DocumentJSON docJSON = new DocumentJSON()
-		docJSON.json = json
 		docJSON.docId = document.id
 		docJSON.json = jsonString
 		docJSON.owner = document.owner
 		// TODO partners and origin of docJSON
-		
+		if (document.originDocId) {
+			def origin = DocumentJSON.findWhere(docId:document.originDocId)
+			docJSON.origin = origin
+		}
 		// save or update
 		def found = DocumentJSON.findByDocId(docJSON.docId)
 		if (found){
+			if (document.originDocId) {
+				def origin = DocumentJSON.findWhere(docId:document.originDocId)
+				found.origin = origin		
+			}
 			found.json = docJSON.json
 			print ("DocumentJSONController savDoc - found.json=" + found.json)
 			if (update(found)) render "Updated!!!"

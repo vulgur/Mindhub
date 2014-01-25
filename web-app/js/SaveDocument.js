@@ -187,10 +187,18 @@ mindhub.SaveDocumentPresenter = function(eventBus, mindmapModel, view, autosaveC
     var json = doc.prepareSave().serialize();
     console.log(json);
 
-    jQuery.post("http://localhost:8080/Mindhub/documentJSON/saveDoc",
-    	json,
-    	function(data){
-    		alert(data);
-    	});
+    // jQuery.post("http://localhost:8080/Mindhub/documentJSON/saveDoc",
+    // 	{'data':json},
+    // 	function(data){
+    // 		alert(data);
+    // 	});
+    $.ajax({
+        type: 'POST',
+        url: "http://localhost:8080/Mindhub/documentJSON/saveDoc",
+        data: {data:json},
+        success: function(data) {
+          alert(data);
+        }
+      });
   };
 };

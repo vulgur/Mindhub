@@ -32,11 +32,11 @@ class DocumentController {
 		String docId = params.docId
 		DocumentJSON docJSON = DocumentJSON.findWhere(docId:docId)
 		if (docJSON) {
-			print "Document Controller: getDocument() -- get the doc";
 			print "Document Controller: getDocument() -- json="+docJSON.json
 			render docJSON.json
+		} else {
+			render null
 		}
-		render null
 	}
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)

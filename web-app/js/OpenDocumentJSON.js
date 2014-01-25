@@ -22,7 +22,7 @@ mindhub.OpenDocumentJSONPresenter = function(eventBus, mindmapModel, view, id) {
 	this.go = function() {
 		console.log("Open Doc JSON: docId= " + id);
 		var json = getDocById(id);
-		json = json.slice(0,-4);
+		//json = json.slice(0,-4);
 		console.log("Open Doc JSON: docJSON= " + json);
 		var doc = mindhub.Document.fromJSON(json);
 		mindmapModel.setDocument(doc);

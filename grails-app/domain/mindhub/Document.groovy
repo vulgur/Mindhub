@@ -11,7 +11,7 @@ class Document {
 	int y
 	User owner
 	List partners = []
-	Document origin
+	String originDocId
     static constraints = {
     }
 }

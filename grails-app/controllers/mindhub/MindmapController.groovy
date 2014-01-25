@@ -8,6 +8,7 @@ class MindmapController {
 		String originDocId = params.originDocId
 		String username = params.username
 		def originDocJSON = DocumentJSON.findWhere(docId:originDocId)
+		assert(originDocJSON)
 		originDocJSON.partners.add(username)
 		originDocJSON.save()
 		def partners = originDocJSON.partners
@@ -15,20 +16,25 @@ class MindmapController {
 		print params
 		respond params
 	}
-    def index() {
-		print "MindmapController index() params.user=" + params.user
-		print "MindmapController index() params.docId=" +params.docId
+    def create() {
+		print "MindmapController create() params.username=" + params.username
 		// mock a document and partners list
-		Document currentDoc = new Document()
-		List partners = currentDoc.partners
-		partners.add(new User(username:"John"))
-		partners.add(new User(username:"Mary"))
-		partners.add(new User(username:"Lisa"))
-		partners.add(new User(username:"Ben"))
-		params.put("partners", partners)
+//		Document currentDoc = new Document()
+//		List partners = currentDoc.partners
+//		partners.add(new User(username:"John"))
+//		partners.add(new User(username:"Mary"))
+//		partners.add(new User(username:"Lisa"))
+//		partners.add(new User(username:"Ben"))
+//		params.put("partners", partners)
 		respond params
 	}
 	
+	def edit() {
+		print "MindmapController edit() params.username=" + params.username
+		print "MindmapController edit() params.docId=" + params.docId
+		print "MindmapController edit() params.isOrigin=" + params.isOrigin
+		redirect (action:'create', params:params)
+	}
 	def save() {
 		print "got here!"
 

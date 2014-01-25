@@ -1,3 +1,11 @@
 *.class
 target/
 target-eclipse/
+target/work/
+target/work/tomcat/work/Tomcat/localhost/Mindhub/grails-resources/js/MindMapModel.js
+
+target/work/tomcat/work/Tomcat/localhost/Mindhub/grails-resources/js/NodeMap.js
+
+target/work/tomcat/work/Tomcat/localhost/Mindhub/grails-resources/js/SaveDocument.js
+
+target/work/tomcat/work/Tomcat/localhost/Mindhub/grails-resources/js/SaveDocument.js

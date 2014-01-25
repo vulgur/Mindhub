@@ -95,8 +95,9 @@ mindhub.Document.prototype.toJSON = function() {
 	}
 
 	var isOrigin = $('#isOrigin').val();
-	if (!isOrigin) {
+	if (isOrigin=="false") {
 		this.id = mindhub.Util.createUUID();
+		console.log("new document id="+this.id);
 	}
 	// var username = '${params.user}'
 	console.log("username: " + username)
