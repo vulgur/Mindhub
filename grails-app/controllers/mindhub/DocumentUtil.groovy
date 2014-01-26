@@ -147,4 +147,10 @@ class DocumentUtil {
 		print document.owner.username
 		print "nodes count:" + document.mindmap.nodes.size()
 	}
+	
+	static def isOriginDocument(docId) {
+		def doc = DocumentJSON.findWhere(docId:docId)
+		if (doc.origin) return false
+		else return true
+	}
 }

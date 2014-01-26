@@ -61,7 +61,7 @@
 								${doc.partners}
 							</td>
 							<td><g:link controller="mindmap" action="edit"
-									params="[username:username, docId:doc.id, isOrigin:true]">Edit</g:link>
+									params="[username:username, docId:doc.id]">Edit</g:link>
 								| <g:link>Delete</g:link></td>
 						</tr>
 					</g:each>

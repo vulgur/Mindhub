@@ -185,7 +185,7 @@ mindhub.SaveDocumentPresenter = function(eventBus, mindmapModel, view, autosaveC
     // console.log(mindmapModel.getMindMap().getRoot().getContent() + ".json");
     var doc = mindmapModel.getDocument();
     var json = doc.prepareSave().serialize();
-    console.log(json);
+    // console.log(json);
 
     // jQuery.post("http://localhost:8080/Mindhub/documentJSON/saveDoc",
     // 	{'data':json},

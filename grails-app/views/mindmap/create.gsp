@@ -200,7 +200,7 @@
 		<div id="topbar">
 			<div id="toolbar">
 				<div id="logo" class="logo-bg">
-					<span>${params.user}</span>
+					<span>${params.username }</span>
 				</div>
 
 				<div class="buttons">
@@ -210,14 +210,15 @@
 						name="osx">
 						<span class="partners"></span> <span class="ui-button-text">Partners</span>
 					</button>
-					<g:if test="${isOrigin == false }">
+					<%--<g:if test="${isOrigin == false }">
+						HERE
 						<button id="Commit"
 							class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary">
 							<span class="Commit"></span> <span class="ui-button-text">Commit</span>
 						</button>
 					</g:if>
 
-				</div>
+				--%></div>
 
 			</div>
 		</div>

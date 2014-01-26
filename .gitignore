@@ -11,3 +11,11 @@ target/work/tomcat/work/Tomcat/localhost/Mindhub/grails-resources/js/SaveDocumen
 target/work/tomcat/work/Tomcat/localhost/Mindhub/grails-resources/js/SaveDocument.js
 
 *.class
+
+target-eclipse/classes/DataSource$_run_closure3_closure4_closure7.class
+
+target/classes/DataSource$_run_closure3_closure4_closure7.class
+
+target/classes/DataSource.class
+
+target/classes/DataSource.class

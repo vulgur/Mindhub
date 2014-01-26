@@ -200,8 +200,7 @@
 		<div id="topbar">
 			<div id="toolbar">
 				<div id="logo" class="logo-bg">
-					<span> ${params.username}
-					</span>
+					<span>${params.username}</span>
 				</div>
 
 				<div class="buttons">
@@ -211,12 +210,12 @@
 						name="osx">
 						<span class="partners"></span> <span class="ui-button-text">Partners</span>
 					</button>
-
-					<button id="Commit"
-						class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary"
-						name="commit">
-						<span class="commit"></span> <span class="ui-button-text">Commit</span>
-					</button>
+					<g:if test="${!isOrigin }">
+						<button id="Commit"
+							class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary">
+							<span class="Commit"></span> <span class="ui-button-text">Commit</span>
+						</button>
+					</g:if>
 
 				</div>
 
@@ -347,8 +346,8 @@
 		originDocId = $('#originDocId').val();
 		isOrigin = $('#isOrigin').val();
 		console.log("USERNAME:" + username);
-		console.log("ORIGIN_DOCUMENT_ID:" + originDocId);
-		console.log("IS_ORIGIN:" + isOrigin);
+		console.log("ORIGIN_DOCUMENT_ID:"+originDocId);
+		console.log("IS_ORIGIN:"+isOrigin);
 	</script>
 </body>
 </html>

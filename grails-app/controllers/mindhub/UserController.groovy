@@ -16,7 +16,7 @@ class UserController {
 	}
 
 	def main() {
-		def owner = User.findByUsername(params.user)
+		def owner = User.findByUsername(params.username)
 		def results = DocumentJSON.findAll()
 		List myDocList = []
 		List allDocList = []
@@ -39,8 +39,8 @@ class UserController {
 		password:params['password'])
 		if (user) {
 			session.user = user
-			print user
-			redirect(action:'main', params:[user:user.username])
+//			print user
+			redirect(action:'main', params:[username:user.username])
 			//			redirect(controller:"mindmap", params:[user:user.username])
 			//			redirect(uri:"index.gsp")
 			//			redirect(uri: "/main/index")

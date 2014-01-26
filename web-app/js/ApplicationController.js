@@ -44,7 +44,7 @@ mindhub.ApplicationController = function() {
 	}
 
 	function doOpenDocumentJSON() {
-		if (isOrigin == "true") {
+		if (docId) {
 			console.log("AC - doOpenDocumentJSON: docId=" + docId);
 			var presenter = new mindhub.OpenDocumentJSONPresenter(eventBus,
 				mindmapModel, new mindhub.OpenDocumentJSONView(), docId);
@@ -94,14 +94,15 @@ mindhub.ApplicationController = function() {
 		viewController.go();
 		// edit the document
 		if (docId) {
+			console.log("EDIT DOCUMENT");
 			doOpenDocumentJSON();
 		} else {
 			// new document
 			if (isOrigin == "true") {
-				console.log("doNewDocument");
+				console.log("New Document");
 				doNewDocument();
 			} else { // fork the document
-				console.log("doOpenDocumentJSON");
+				console.log("FORK DOCUMENT");
 				doOpenDocumentJSON();
 			}
 		}
