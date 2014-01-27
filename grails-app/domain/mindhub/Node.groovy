@@ -1,7 +1,7 @@
 package mindhub
 
-class Node {
-//	static belongsTo = Mindmap
+class Node implements Comparable {
+//	static belongsTo = [diff:Diff]
 //	static hasOne = [parent:Node]
 //	static hasMany = [children:Node]
 	String id
@@ -49,7 +49,11 @@ class Node {
 		depth
 	}
 	
-	
+	int compareTo(obj) {
+		if (this.id.equals(obj.id) && this.content.equals(obj.content)) return 0 // same id and content 
+		else if (this.id.equals(obj.id)) return 1 // same id
+		else return -1 // different node
+	}
     static constraints = {
     }
 }

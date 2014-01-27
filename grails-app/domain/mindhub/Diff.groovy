@@ -6,8 +6,17 @@ class Diff {
 	}
 	
 	DiffType type
-	Node node
+	String nodeId
+	String nodeContent
+	String parentId
+//	static hasOne = [node:Node]
 	
     static constraints = {
     }
+	
+	static mapping = {
+		nodeId column: 'nodeId'
+		nodeContent column: 'nodeContent'
+		parentId column: 'parentId'
+	}
 }

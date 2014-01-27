@@ -210,15 +210,15 @@
 						class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary osx"
 						name="osx">
 						<span class="partners"></span> <span class="ui-button-text">Partners</span>
-					</button>
+					</button><%--
 
-					<button id="Commit"
+					<button id="commit"
 						class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary"
 						name="commit">
 						<span class="commit"></span> <span class="ui-button-text">Commit</span>
 					</button>
 
-				</div>
+				--%></div>
 
 			</div>
 		</div>
@@ -349,6 +349,7 @@
 		console.log("USERNAME:" + username);
 		console.log("ORIGIN_DOCUMENT_ID:" + originDocId);
 		console.log("IS_ORIGIN:" + isOrigin);
+		
 	</script>
 </body>
 </html>

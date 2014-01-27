@@ -30,6 +30,11 @@ mindhub.ApplicationController = function() {
 		presenter.go();
 	}
 
+	function doCommitDocument() {
+		var presenter = new mindhub.CommitDocumentPresenter(eventBus,mindmapModel,
+			new mindhub.CommitDocumentView());
+		presenter.go();
+	}
 	function doCloseDocument() {
 		var doc = mindmapModel.getDocument();
 		if (doc) {

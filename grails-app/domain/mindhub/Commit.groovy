@@ -1,12 +1,14 @@
 package mindhub
 
 class Commit {
-	String key
+//	String key
 	Date commitDate
 	User committer
-	Diff diff
-	Document document
-	List prev
+	static hasMany = [diffs:Diff]
+	DocumentJSON origin
+	DocumentJSON modified
+//	Commit prev
+	boolean isRead
     static constraints = {
     }
 }

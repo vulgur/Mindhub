@@ -10,20 +10,35 @@ import groovy.json.JsonSlurper
 class DocumentJSONController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+//	def commitDoc() {
+//		def jsonString = params.data
+//		def slurper = new JsonSlurper()
+//		def json = slurper.parseText(jsonString)
+//		Document document = DocumentUtil.fromJSON(json)
+//		DocumentJSON docJSON = new DocumentJSON()
+//		docJSON.docId = document.id
+//		docJSON.json = jsonString
+//		docJSON.owner = document.owner
+//		// TODO partners and origin of docJSON
+//		if (document.originDocId) {
+//			def origin = DocumentJSON.findWhere(docId:document.originDocId)
+//			docJSON.origin = origin
+//		}
+//	}
 	def saveDoc() {
-		print "-------------\n" + params
+		print "DocumentJSONController saveDoc() params.type="+params.type
 		def jsonString = params.data
-		print "saveDoc: jsonString=" + jsonString
+//		print "saveDoc: jsonString=" + jsonString
 //		params.each {key, value ->
 //			if(key!="action" && key!="controller" && key!="format") jsonString = key
 //		}
 		
 		def slurper = new JsonSlurper()
 		def json = slurper.parseText(jsonString)
-		print "saveDoc: json:" + json
+//		print "saveDoc: json:" + json
 		
 		Document document = DocumentUtil.fromJSON(json)
-		print ("DocumentJSONController savDoc - node count="+document.mindmap.nodes.size())
+//		print ("DocumentJSONController savDoc - node count="+document.mindmap.nodes.size())
 		DocumentJSON docJSON = new DocumentJSON()
 		docJSON.docId = document.id
 		docJSON.json = jsonString
@@ -41,11 +56,21 @@ class DocumentJSONController {
 				found.origin = origin		
 			}
 			found.json = docJSON.json
-			print ("DocumentJSONController savDoc - found.json=" + found.json)
-			if (update(found)) render "Updated!!!"
+//			print ("DocumentJSONController savDoc - found.json=" + found.json)
+			if (update(found)) {
+				if (params.type=='commit'){
+					redirect (controller:'commit', action:'save',params:[username:document.owner.username, docId:document.id, originDocId:document.originDocId])		
+				}	
+				render "Updated!!!"
+			}		
 			else render "update failed!!!"
 		} else {
-			if (save(docJSON)) render "Saved!!!"
+			if (save(docJSON)){
+				if (params.type=='commit'){
+					redirect (controller:'commit', action:'save',params:[username:document.owner.username, docId:document.id, originDocId:document.originDocId])
+				}
+				render "Saved!!!"
+			} 
 			else render "save failed!!!"
 		}
 		
