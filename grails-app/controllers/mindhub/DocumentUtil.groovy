@@ -1,5 +1,6 @@
 package mindhub
 
+import grails.converters.JSON
 import groovy.json.JsonSlurper
 
 class DocumentUtil {
@@ -38,52 +39,62 @@ class DocumentUtil {
 		root.setBranchColor(rootJSON.branchColor)
 		root.setPosX(rootJSON.position.x)
 		root.setPosY(rootJSON.position.y)
-		//		root.setPosition(new Point(x:rootJSON.position.x, y:rootJSON.position.y))
+//		print "~~~~~~~text font~~~~~~~"
+//		print rootJSON.text.font
+//		root.font.put("style",rootJSON.text.font.style)
+//		root.font.put("weight",rootJSON.text.font.weight)
+//		root.font.put("decoration",rootJSON.text.font.decoration)
+//		root.font.put("size",rootJSON.text.font.size)
+//		root.font.put("color",rootJSON.text.font.color)
 		mm.nodes.add(root)
-		// TODO font, isFold, branchColor
 
 		// children of root
 		def childrenJSON = rootJSON.children
-		for (childJSON in childrenJSON) {
-			Node node = new Node()
-			node.setId(childJSON.id)
-			node.setContent(childJSON.text.content)
-			node.setParent(root)
-			//			node.setPosition(new Point(x:childJSON.position.x, y:childJSON.position.y))
-			node.setBranchColor(childJSON.branchColor)
-			node.setPosX(childJSON.position.x)
-			node.setPosY(childJSON.position.y)
-			// add children to child
-			//			print "xxxxxx-"+childJSON.children
-			//			assert childJSON.children instanceof List
-			addChildren(childJSON.children, node, mm)
-			// add to root and mindmap
-			root.addChild(node)
-			mm.nodes.add(node)
-		}
+		//		for (childJSON in childrenJSON) {
+		//			Node node = new Node()
+		//			node.setId(childJSON.id)
+		//			node.setContent(childJSON.text.content)
+		//			node.setParent(root)
+		//			//			node.setPosition(new Point(x:childJSON.position.x, y:childJSON.position.y))
+		//			node.setBranchColor(childJSON.branchColor)
+		//			node.setPosX(childJSON.position.x)
+		//			node.setPosY(childJSON.position.y)
+		//			// add children to child
+		//			//			print "xxxxxx-"+childJSON.children
+		//			//			assert childJSON.children instanceof List
+		//			addChildren(childJSON.children, node, mm)
+		//			// add to root and mindmap
+		//			root.addChild(node)
+		//			mm.nodes.add(node)
+		//		}
+		addChildren(childrenJSON, root, mm);
 
 		mm.setRoot(root)
 		document.setMindmap(mm)
 		return document
 	}
 
-	static def addChildren(List json,Node parent, Mindmap mm) {
+	static def addChildren(json,Node parent, Mindmap mm) {
 		if (json == null || json.size() == 0) {
 			return
 		}
 		for (child in json) {
-			//			print "yyyyyy-" + child
 			Node node = new Node()
 			node.setId(child.id)
 			node.setContent(child.text.content)
 			node.setParent(parent)
-			//			node.setPosition(new Point(x:child.position.x, y:child.position.y))
+			
 			node.setPosX(child.position.x)
 			node.setPosY(child.position.y)
+//			node.font.put("style",child.text.font.style)
+//			node.font.put("weight",child.text.font.weight)
+//			node.font.put("decoration",child.text.font.decoration)
+//			node.font.put("size",child.text.font.size)
+//			node.font.put("color",child.text.font.color)
+			parent.children.add(node)
 			mm.nodes.add(node)
-			//			print "zzzzzz-" + child.children
 			if (child.children.size() !=0 ) {
-				addChilren(child.children, node)
+				addChildren(child.children, node, mm)
 			}
 		}
 	}
@@ -94,17 +105,21 @@ class DocumentUtil {
 		def diffs = []
 		def nodes1 = mm1.nodes
 		def nodes2 = mm2.nodes
+		def addedNodes = []
+		def modifiedNodes = []
+		def deletedNodes = []
 		// search added and modified nodes
 		for (node2 in nodes2) {
 			boolean flag = false
 			for (node1 in nodes1) {
 				if (compareNodes(node1, node2)==1){ // same id and different content
-					Diff diff = new Diff()
-					diff.nodeId = node2.id
-					diff.nodeContent = node2.content
-					diff.parentId = node2.parent.id
-					diff.type = Diff.DiffType.MODIFIED
-					diffs.add(diff)
+					//					Diff diff = new Diff()
+					//					diff.nodeId = node2.id
+					//					diff.nodeContent = node2.content
+					//					diff.parentId = node2.parent.id
+					//					diff.type = Diff.DiffType.MODIFIED
+					//					diffs.add(diff)
+					modifiedNodes.add(node2)
 					flag = true
 					break
 				}
@@ -113,12 +128,13 @@ class DocumentUtil {
 				}
 			}
 			if (flag == false) {
-				Diff diff = new Diff()
-				diff.nodeId = node2.id
-				diff.nodeContent = node2.content
-				diff.parentId = node2.parent.id
-				diff.type = Diff.DiffType.ADDED
-				diffs.add(diff)
+				//				Diff diff = new Diff()
+				//				diff.nodeId = node2.id
+				//				diff.nodeContent = node2.content
+				//				diff.parentId = node2.parent.id
+				//				diff.type = Diff.DiffType.ADDED
+				//				diffs.add(diff)
+				addedNodes.add(node2)
 			}
 		}
 		// search removed nodes
@@ -130,18 +146,56 @@ class DocumentUtil {
 				}
 			}
 			if (flag == false) {
-				Diff diff = new Diff()
-				diff.nodeId = node1.id
-				diff.nodeContent = node1.content
-				diff.parentId = node1.parent.id
-				diff.type = Diff.DiffType.REMOVED
-				diffs.add(diff)
+				//				Diff diff = new Diff()
+				//				diff.nodeId = node1.id
+				//				diff.nodeContent = node1.content
+				//				diff.parentId = node1.parent.id
+				//				diff.type = Diff.DiffType.REMOVED
+				//				diffs.add(diff)
+				deletedNodes.add(node1)
 			}
 		}
-		printDiffs(diffs)
+		def addedRoots = getRoots(addedNodes)
+		def deletedRoots = getRoots(deletedNodes)
+		// add added nodes to diffs
+		for (node in addedRoots) {
+			Diff diff = new Diff()
+			diff.type = Diff.DiffType.ADDED
+			diff.nodeJSON = node.toJSON()
+			diff.nodeId = node.id
+			diff.nodeContent = node.content
+			diff.parentId = node.parent.id
+			diffs.add(diff)
+		}
+		// add removed nodes to diffs
+		for (node in deletedRoots) {
+			Diff diff = new Diff()
+			diff.type = Diff.DiffType.REMOVED
+			diff.nodeJSON = node.toJSON()
+			diff.nodeId = node.id
+			diff.nodeContent = node.content
+//			diff.parentId = node.parent.id
+			diffs.add(diff)
+		}
+		// add modified nodes to diffs
+		for (node in modifiedNodes) {
+			Diff diff = new Diff()
+			diff.type = Diff.DiffType.MODIFIED
+			diff.nodeJSON = node.toJSON()
+			diff.nodeId = node.id
+			diff.nodeContent = node.content
+			diffs.add(diff)
+		}
 		return diffs
 	}
-
+	static void printRoots(roots) {
+		print "********ROOTS********"
+		for (root in roots) {
+			print "root="+ root.content
+			print "children size="+root.children.size()
+			print root.toJSON()
+		}
+	}
 	static void printDiffs(diffs) {
 		print "-------DIFFS------"
 		for (d in diffs) {
@@ -197,4 +251,28 @@ class DocumentUtil {
 		//		print "compare result="+result
 		return result
 	}
+
+	static def getRoots(nodes) {
+		def map = [:]
+		//		def roots = []
+		for (node in nodes) {
+			map.put(node.id, false)
+		}
+		def roots = []
+		for (node in nodes) {
+			if (map[node.parent.id] == null) {
+				//				map[node.parent.id] = true
+				roots.add(node)
+			}
+		}
+		return roots
+	}
+
+	//	static String getNodeJSON(Node node) {
+	//		StringBuffer sb = new StringBuffer()
+	////		def result = [node:node]
+	//		JSON.use('deep')
+	//		def converter = node as JSON
+	//		return converter.toString()
+	//	}
 }

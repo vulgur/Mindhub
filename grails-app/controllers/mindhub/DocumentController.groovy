@@ -28,11 +28,11 @@ class DocumentController {
 	}
 	
 	def getDocumentById() {
-		print "Document Controller: getDocument() -- docId="+params.docId
+//		print "Document Controller: getDocument() -- docId="+params.docId
 		String docId = params.docId
 		DocumentJSON docJSON = DocumentJSON.findWhere(docId:docId)
 		if (docJSON) {
-			print "Document Controller: getDocument() -- json="+docJSON.json
+//			print "Document Controller: getDocument() -- json="+docJSON.json
 			render docJSON.json
 		} else {
 			render null

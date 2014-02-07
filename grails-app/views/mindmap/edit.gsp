@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="../css/minicolors/jQuery.miniColors.css" />
 <link type='text/css' href='../css/osx.css' rel='stylesheet'
 	media='screen' />
+<link href="../css/bootstrap.min.css" rel="stylesheet">
 
 <script id="template-float-panel" type="text/x-jquery-tmpl">
 	<div class="ui-widget ui-dialog ui-corner-all ui-widget-content float-panel no-select">
@@ -200,7 +201,8 @@
 		<div id="topbar">
 			<div id="toolbar">
 				<div id="logo" class="logo-bg">
-					<span>${params.username}</span>
+					<span> ${params.username}
+					</span>
 				</div>
 
 				<div class="buttons">
@@ -210,12 +212,10 @@
 						name="osx">
 						<span class="partners"></span> <span class="ui-button-text">Partners</span>
 					</button>
-					<g:if test="${!isOrigin }">
-						<button id="Commit"
-							class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary">
-							<span class="Commit"></span> <span class="ui-button-text">Commit</span>
-						</button>
-					</g:if>
+					<button id="Commits"
+						class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary">
+						<span class="Commits"></span> <span class="ui-button-text">Commits</span>
+					</button>
 
 				</div>
 
@@ -339,15 +339,37 @@
 	<script src="../js/AutoSaveController.js"></script>
 
 	<script src="../js/FilePicker.js"></script>
-
+	<script src="../js/Diff.js"></script>
+	<script src="../js/DiffUtil.js"></script>
+	
+	<script src="../js/libs/bootstrap.min.js"></script>
 	<!-- JS:LIB:END -->
 	<script type="text/javascript">
 		username = $('#username').val();
 		originDocId = $('#originDocId').val();
 		isOrigin = $('#isOrigin').val();
+		docId = $('#docId').val();
 		console.log("USERNAME:" + username);
-		console.log("ORIGIN_DOCUMENT_ID:"+originDocId);
-		console.log("IS_ORIGIN:"+isOrigin);
+		console.log("ORIGIN_DOCUMENT_ID:" + originDocId);
+		console.log("IS_ORIGIN:" + isOrigin);
+		$(function() {
+			$("#Commits")
+					.click(
+							function() {
+								$
+										.post(
+												"http://localhost:8080/Mindhub/commit/getCommitsByDocId",
+												{
+													docId : docId
+												}, function(data) {
+													console
+															.log("diffs:"
+																	+ data);
+													alert(data);
+												})
+							});
+			getAllDiffs();
+		});
 	</script>
 </body>
 </html>

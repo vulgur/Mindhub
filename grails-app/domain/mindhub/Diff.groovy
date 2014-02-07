@@ -6,17 +6,19 @@ class Diff {
 	}
 	
 	DiffType type
+	String nodeJSON
 	String nodeId
 	String nodeContent
 	String parentId
-//	static hasOne = [node:Node]
-	
     static constraints = {
+		parentId nullable:true
     }
 	
 	static mapping = {
 		nodeId column: 'nodeId'
 		nodeContent column: 'nodeContent'
 		parentId column: 'parentId'
+		nodeJSON type: 'text'
 	}
+
 }

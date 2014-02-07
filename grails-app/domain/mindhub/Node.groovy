@@ -1,5 +1,7 @@
 package mindhub
 
+import org.springframework.aop.aspectj.RuntimeTestWalker.ThisInstanceOfResidueTestVisitor;
+
 class Node implements Comparable {
 //	static belongsTo = [diff:Diff]
 //	static hasOne = [parent:Node]
@@ -31,7 +33,7 @@ class Node implements Comparable {
 		this.content = str
 	}
 	
-	boolean isLean() {
+	boolean isLeaf() {
 		this.children.size() == 0
 	}
 	
@@ -53,6 +55,63 @@ class Node implements Comparable {
 		if (this.id.equals(obj.id) && this.content.equals(obj.content)) return 0 // same id and content 
 		else if (this.id.equals(obj.id)) return 1 // same id
 		else return -1 // different node
+	}
+	
+	String getChildrenJSON() {
+		StringBuffer sb = new StringBuffer()
+		sb << "{"
+		for(c in this.children) {
+			sb << c.toJSON() << ","
+		}
+		sb = sb.deleteCharAt(sb.length()-1)
+		sb << "}"
+		return sb.toString()
+	}
+	String getFontJSON() {
+		StringBuffer sb = new StringBuffer()
+		sb << "{"
+		sb << "style:normal" << ","
+		sb << "weight:normal" << ","
+		sb << "decoration:none"	<< ","
+		sb << "size:15" << ","
+		sb << "color:#000000"
+		sb << "}"
+		return sb.toString()
+	}
+	String getTextJSON() {
+		StringBuffer sb = new StringBuffer()
+		sb << "{"
+		sb << "\"content:\"" << this.content << "\","
+		//sb << "font:" + getFont() << ","
+		sb << "}"
+		return sb.toString()
+	}
+	
+	String getPositionJSON() {
+		StringBuffer sb = new StringBuffer()
+		sb << "{"
+		sb << "\"x:\"" << this.posX << "\","
+		sb << "\"y:\"" << this.posY << "\","
+		sb << "}"
+		return sb.toString()
+	}
+	
+	String getParentId() {
+		if (this.parent == null) return "null"
+		else return this.parent.id
+	}
+	public String toJSON() {
+		StringBuffer sb = new StringBuffer()
+		sb << "{"
+		sb << "\"id\":\"" << this.id << "\","
+		sb << "\"parentId:\"" << getParentId() << "\","
+		sb << "\"text:\"" << getTextJSON() << "\","
+		sb << "\"position:\"" << getPositionJSON() <<"\","
+		sb << "\"isFold:\"" << this.isFold << "\","
+		sb << "\"branchColor:\"" << this.branchColor << "\","
+		sb << "\"children:\"" << getChildrenJSON()
+		sb << "}"
+		return sb.toString()
 	}
     static constraints = {
     }

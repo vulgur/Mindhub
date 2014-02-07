@@ -1,5 +1,6 @@
 package mindhub
 
+import grails.converters.JSON
 import groovy.json.JsonSlurper
 
 class CommitController {
@@ -53,4 +54,21 @@ class CommitController {
 	def getLastCommit() {}
 	
 	def getCommit(key) {}
+	
+	def getCommitsByDocId() {
+		def docId = params.docId
+		def query = Commit.where {
+			origin.docId == docId
+		}
+		def commits = query.find()
+		def map = [:]
+		for (c in commits) {
+			for (diff in c.diffs) {
+				map.put(diff.nodeId, diff)
+			}
+		}
+		
+		String json = map as JSON
+		render json
+	}
 }
