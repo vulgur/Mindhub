@@ -58,31 +58,34 @@ class Node implements Comparable {
 	}
 	
 	String getChildrenJSON() {
+//		if (this.children == null || this.children.size() == 0) {
+//			return "[]"
+//		}
 		StringBuffer sb = new StringBuffer()
-		sb << "{"
 		for(c in this.children) {
 			sb << c.toJSON() << ","
 		}
-		sb = sb.deleteCharAt(sb.length()-1)
-		sb << "}"
+		if (sb.length() > 1) {
+			sb = sb.deleteCharAt(sb.length()-1)
+		}
 		return sb.toString()
 	}
 	String getFontJSON() {
 		StringBuffer sb = new StringBuffer()
 		sb << "{"
-		sb << "style:normal" << ","
-		sb << "weight:normal" << ","
-		sb << "decoration:none"	<< ","
-		sb << "size:15" << ","
-		sb << "color:#000000"
+		sb << "\"style\":\"normal\"" << ","
+		sb << "\"weight\":\"normal\"" << ","
+		sb << "\"decoration\":\"none\""	<< ","
+		sb << "\"size\":\"15\"" << ","
+		sb << "\"color\":\"#000000\""
 		sb << "}"
 		return sb.toString()
 	}
 	String getTextJSON() {
 		StringBuffer sb = new StringBuffer()
 		sb << "{"
-		sb << "\"content:\"" << this.content << "\","
-		//sb << "font:" + getFont() << ","
+		sb << "\"content\":\"" << this.content << "\","
+		sb << "\"font\":" + getFontJSON() 
 		sb << "}"
 		return sb.toString()
 	}
@@ -90,8 +93,8 @@ class Node implements Comparable {
 	String getPositionJSON() {
 		StringBuffer sb = new StringBuffer()
 		sb << "{"
-		sb << "\"x:\"" << this.posX << "\","
-		sb << "\"y:\"" << this.posY << "\","
+		sb << "\"x\":\"" << this.posX << "\","
+		sb << "\"y\":\"" << this.posY << "\""
 		sb << "}"
 		return sb.toString()
 	}
@@ -104,12 +107,12 @@ class Node implements Comparable {
 		StringBuffer sb = new StringBuffer()
 		sb << "{"
 		sb << "\"id\":\"" << this.id << "\","
-		sb << "\"parentId:\"" << getParentId() << "\","
-		sb << "\"text:\"" << getTextJSON() << "\","
-		sb << "\"position:\"" << getPositionJSON() <<"\","
-		sb << "\"isFold:\"" << this.isFold << "\","
-		sb << "\"branchColor:\"" << this.branchColor << "\","
-		sb << "\"children:\"" << getChildrenJSON()
+		sb << "\"parentId\":\"" << getParentId() << "\","
+		sb << "\"text\":" << getTextJSON() << ","
+		sb << "\"position\":" << getPositionJSON() <<","
+		sb << "\"isFold\":\"" << this.isFold << "\","
+		sb << "\"branchColor\":\"" << this.branchColor << "\","
+		sb << "\"children\":[" << getChildrenJSON() << "]" 
 		sb << "}"
 		return sb.toString()
 	}

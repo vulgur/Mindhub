@@ -11,11 +11,12 @@
 <link rel="icon" type="image/png" href="img/favicon.png" />
 <link rel="stylesheet" href="../css/common.css" />
 <link rel="stylesheet" href="../css/app.css" />
-<link rel="stylesheet" href="../css/Aristo/jquery-ui-1.8.7.custom.css" />
+<link rel="stylesheet" href="../css/cupertino/jquery-ui-1.10.4.custom.css" />
+<link rel="stylesheet" href="../css/bootstrap-theme.css" />
+<link rel="stylesheet" href="../css/bootstrap.css" />
 <link rel="stylesheet" href="../css/minicolors/jQuery.miniColors.css" />
 <link type='text/css' href='../css/osx.css' rel='stylesheet'
 	media='screen' />
-<link href="../css/bootstrap.min.css" rel="stylesheet">
 
 <script id="template-float-panel" type="text/x-jquery-tmpl">
 	<div class="ui-widget ui-dialog ui-corner-all ui-widget-content float-panel no-select">
@@ -190,23 +191,16 @@
 
 </head>
 <body>
-	<div id="print-area">
-		<p class="print-placeholder">Please user the print option from the
-			mind map menu</p>
-	</div>
-	<!-- DEBUG -->
-	<div id="debug-warning">Running in DEBUG mode.</div>
-	<!-- /DEBUG -->
 	<div id="container">
 		<div id="topbar">
 			<div id="toolbar">
 				<div id="logo" class="logo-bg">
-					<span> ${params.username}
-					</span>
+					<span>${params.username}</span>
 				</div>
-
 				<div class="buttons">
-					<span class="buttons-left"></span> <span class="buttons-right"></span>
+					<span class="buttons-left"></span> 
+					<span class="buttons-right"></span>
+					
 					<button id="partners"
 						class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary osx"
 						name="osx">
@@ -275,9 +269,9 @@
 	<!-- /DEBUG -->
 
 	<!-- JS:LIB:BEGIN -->
-	<!-- <g:javascript src="libs/jquery-1.10.2.min.js" />
-	-->
-	<script src="../js/libs/jquery-1.10.2.min.js"></script>
+	<g:javascript src="libs/jquery-1.10.2.min.js" />
+	<script src="../js/libs/bootstrap.min.js"></script>
+	<%--<script src="../js/libs/jquery-1.10.2.min.js"></script>--%>
 	<script src="../js/libs/jquery-ui-1.10.3.custom.min.js"></script>
 	<script src="../js/libs/dragscrollable.js"></script>
 	<script src="../js/libs/jquery.hotkeys.js"></script>
@@ -342,7 +336,7 @@
 	<script src="../js/Diff.js"></script>
 	<script src="../js/DiffUtil.js"></script>
 	
-	<script src="../js/libs/bootstrap.min.js"></script>
+	
 	<!-- JS:LIB:END -->
 	<script type="text/javascript">
 		username = $('#username').val();
@@ -352,24 +346,6 @@
 		console.log("USERNAME:" + username);
 		console.log("ORIGIN_DOCUMENT_ID:" + originDocId);
 		console.log("IS_ORIGIN:" + isOrigin);
-		$(function() {
-			$("#Commits")
-					.click(
-							function() {
-								$
-										.post(
-												"http://localhost:8080/Mindhub/commit/getCommitsByDocId",
-												{
-													docId : docId
-												}, function(data) {
-													console
-															.log("diffs:"
-																	+ data);
-													alert(data);
-												})
-							});
-			getAllDiffs();
-		});
 	</script>
 </body>
 </html>

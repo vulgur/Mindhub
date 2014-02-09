@@ -26,5 +26,6 @@ mindhub.OpenDocumentJSONPresenter = function(eventBus, mindmapModel, view, id) {
 		// console.log("Open Doc JSON: docJSON= " + json);
 		var doc = mindhub.Document.fromJSON(json);
 		mindmapModel.setDocument(doc);
+		getAllDiffs(mindmapModel);
 	};
 };

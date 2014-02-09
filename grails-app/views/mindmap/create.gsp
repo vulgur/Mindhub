@@ -11,10 +11,12 @@
 <link rel="icon" type="image/png" href="img/favicon.png" />
 <link rel="stylesheet" href="../css/common.css" />
 <link rel="stylesheet" href="../css/app.css" />
-<link rel="stylesheet" href="../css/Aristo/jquery-ui-1.8.7.custom.css" />
+<%--<link rel="stylesheet" href="../css/Aristo/jquery-ui-1.8.7.custom.css" />--%>
+<link rel="stylesheet" href="../css/cupertino/jquery-ui-1.10.4.custom.css" />
 <link rel="stylesheet" href="../css/minicolors/jQuery.miniColors.css" />
 <link type='text/css' href='../css/osx.css' rel='stylesheet'
 	media='screen' />
+	
 
 <script id="template-float-panel" type="text/x-jquery-tmpl">
 	<div class="ui-widget ui-dialog ui-corner-all ui-widget-content float-panel no-select">

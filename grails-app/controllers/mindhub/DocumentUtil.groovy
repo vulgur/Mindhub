@@ -41,11 +41,11 @@ class DocumentUtil {
 		root.setPosY(rootJSON.position.y)
 //		print "~~~~~~~text font~~~~~~~"
 //		print rootJSON.text.font
-//		root.font.put("style",rootJSON.text.font.style)
-//		root.font.put("weight",rootJSON.text.font.weight)
-//		root.font.put("decoration",rootJSON.text.font.decoration)
-//		root.font.put("size",rootJSON.text.font.size)
-//		root.font.put("color",rootJSON.text.font.color)
+		root.font.put("style",rootJSON.text.font.style)
+		root.font.put("weight",rootJSON.text.font.weight)
+		root.font.put("decoration",rootJSON.text.font.decoration)
+		root.font.put("size",rootJSON.text.font.size)
+		root.font.put("color",rootJSON.text.font.color)
 		mm.nodes.add(root)
 
 		// children of root
@@ -83,14 +83,14 @@ class DocumentUtil {
 			node.setId(child.id)
 			node.setContent(child.text.content)
 			node.setParent(parent)
-			
-			node.setPosX(child.position.x)
-			node.setPosY(child.position.y)
-//			node.font.put("style",child.text.font.style)
-//			node.font.put("weight",child.text.font.weight)
-//			node.font.put("decoration",child.text.font.decoration)
-//			node.font.put("size",child.text.font.size)
-//			node.font.put("color",child.text.font.color)
+			node.setBranchColor(child.branchColor)
+			node.setPosX(child.position.x.toFloat())
+			node.setPosY(child.position.y.toFloat())
+			node.font.put("style",child.text.font.style)
+			node.font.put("weight",child.text.font.weight)
+			node.font.put("decoration",child.text.font.decoration)
+			node.font.put("size",child.text.font.size)
+			node.font.put("color",child.text.font.color)
 			parent.children.add(node)
 			mm.nodes.add(node)
 			if (child.children.size() !=0 ) {

@@ -60,7 +60,7 @@ class CommitController {
 		def query = Commit.where {
 			origin.docId == docId
 		}
-		def commits = query.find()
+		def commits = query.list()
 		def map = [:]
 		for (c in commits) {
 			for (diff in c.diffs) {

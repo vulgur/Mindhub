@@ -3,42 +3,56 @@ function findNodeDiv(id) {
 	return $(divId);
 }
 
-function renderNodeDiffDiv($div, diffs) {
-	$.each(diffs, function(index, diff) {
+function renderNodeDiffDiv($ul, diffs, mindmapModel) {
 
-		var p = $("<p></p>");
+	$.each(diffs, function(index, diff) {
+		var node = mindmapModel.getMindMap().nodeMap.getNodeById(diff.nodeId);
+		var $link = $("<a></a>");
 		if (diff.type == 'ADDED') {
-			p.text("Add node: " + diff.nodeContent);
+			$link.html("Add node: " + diff.nodeContent);
+			$link.click(function() {
+				console.log(diff.nodeJSON);
+				var obj = $.parseJSON(diff.nodeJSON);
+
+				var addedNode = mindhub.Node.fromObject(obj);
+				var parent = mindmapModel.getMindMap().nodeMap.getNodeById(diff.parentId);
+				mindmapModel.createNode(addedNode, parent);
+			});
 		} else if (diff.type == 'MODIFIED') {
-			p.text("Change content to: " + diff.nodeContent);
+			$link.html("Change to: " + diff.nodeContent);
+			$link.click(function() {
+				mindmapModel.changeNodeContent(node, diff.nodeContent);
+			});
 		} else {
-			p.text("Delete this node");
+			$link.html("Delete this node");
+			$link.click(function() {
+				mindmapModel.deleteNode(node);
+			});
 		}
-		p.appendTo($div);
+		$link.append("<br/>");
+		$link.appendTo($ul);
 	});
 }
 
-function renderAllDiffs(diffList) {
+function renderAllDiffs(diffList, mindmapModel) {
 	$.each(diffList, function(key, value) {
 		var nodeId = key;
 		var diffs = value;
 		var $diffDiv = $("<div class='node-container'></div>");
 		var $nodeDiv = findNodeDiv(nodeId);
 		var $btnDiv = $("<div class='btn-group'></div>");
-		var $btn = $("<button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown'>Action<span class='caret'></button>")
+		var $btn = $("<button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown'>Diffs<span class='caret'></button>")
 		$btn.appendTo($btnDiv);
 		var $ul = $("<ul class='dropdown-menu' role='menu'></ul>");
-		$ul.append("<li>AAA</li>");
-		$ul.append("<li>BBB</li>");
-		$ul.append("<li>CCC</li>");
+		renderNodeDiffDiv($ul, diffs, mindmapModel);
 		$ul.appendTo($btnDiv);
 		$btnDiv.appendTo($nodeDiv);
 		// $nodeDiv.before($diffDiv);
-		// renderNodeDiffDiv($diffDiv, diffs);
+
 	});
 }
 
-function getAllDiffs() {
+function getAllDiffs(mindmapModel) {
 	var json
 	$.ajax({
 		url: "http://localhost:8080/Mindhub/commit/getCommitsByDocId",
@@ -53,7 +67,7 @@ function getAllDiffs() {
 	});
 	var obj = $.parseJSON(json);
 	var diffsMap = {};
-	$.each(obj, function(index, value){
+	$.each(obj, function(index, value) {
 		// console.log(value);
 		var diff = new mindhub.Diff();
 		diff.type = value.type.name;
@@ -73,12 +87,12 @@ function getAllDiffs() {
 		diffsMap[key].push(diff);
 	});
 	console.log("DiffMap:");
-	$.each(diffsMap,function(key, value){
-		console.log(key,value);
+	$.each(diffsMap, function(key, value) {
+		console.log(key, value);
 	});
 	// var diffList = fromJSON(json);
 	// console.log("diffList:"+diffList);
-	renderAllDiffs(diffsMap);
+	renderAllDiffs(diffsMap, mindmapModel);
 }
 
 function fromJSON(json) {

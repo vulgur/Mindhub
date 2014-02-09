@@ -107,32 +107,32 @@ mindhub.MainViewController = function(eventBus, mindmapModel, commmandRegistry) 
 			mindmapModel, canvas, zoomController);
 		canvasPrensenter.go();
 
-		// statusbar
-		var statusbar = new mindhub.StatusBarView();
-		var statusbarPresenter = new mindhub.StatusBarPresenter(eventBus, statusbar);
-		statusbarPresenter.go();
+		// // statusbar
+		// var statusbar = new mindhub.StatusBarView();
+		// var statusbarPresenter = new mindhub.StatusBarPresenter(eventBus, statusbar);
+		// statusbarPresenter.go();
 
-		// floating panels factory
-		var fpf = new mindhub.FloatPanelFactory(canvasContainer);
+		// // floating panels factory
+		// var fpf = new mindhub.FloatPanelFactory(canvasContainer);
 
-		// inspector
-		var inspectorView = new mindhub.InspectorView();
-		var inspectorPresenter = new mindhub.InspectorPresenter(eventBus, mindmapModel,
-			inspectorView);
-		inspectorPresenter.go();
+		// // inspector
+		// var inspectorView = new mindhub.InspectorView();
+		// var inspectorPresenter = new mindhub.InspectorPresenter(eventBus, mindmapModel,
+		// 	inspectorView);
+		// inspectorPresenter.go();
 
-		var inspectorPanel = fpf.create("Inspector", inspectorView.getContent());
-		inspectorPanel.show();
-		statusbarPresenter.addEntry(inspectorPanel);
+		// var inspectorPanel = fpf.create("Inspector", inspectorView.getContent());
+		// inspectorPanel.show();
+		// statusbarPresenter.addEntry(inspectorPanel);
 
-		// navigator
-		var navigatorView = new mindhub.NavigatorView();
-		var navigatorPresenter = new mindhub.NavigatorPresenter(eventBus, 
-			navigatorView, canvasContainer, zoomController);
-		navigatorPresenter.go();
+		// // navigator
+		// var navigatorView = new mindhub.NavigatorView();
+		// var navigatorPresenter = new mindhub.NavigatorPresenter(eventBus, 
+		// 	navigatorView, canvasContainer, zoomController);
+		// navigatorPresenter.go();
 
-		var navigatorPanel = fpf.create("Navigator", navigatorView.getContent());
-		navigatorPanel.show();
-		statusbarPresenter.addEntry(navigatorPanel);
+		// var navigatorPanel = fpf.create("Navigator", navigatorView.getContent());
+		// navigatorPanel.show();
+		// statusbarPresenter.addEntry(navigatorPanel);
 	};
 };

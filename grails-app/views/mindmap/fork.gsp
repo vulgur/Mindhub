@@ -11,7 +11,8 @@
 <link rel="icon" type="image/png" href="img/favicon.png" />
 <link rel="stylesheet" href="../css/common.css" />
 <link rel="stylesheet" href="../css/app.css" />
-<link rel="stylesheet" href="../css/Aristo/jquery-ui-1.8.7.custom.css" />
+<%--<link rel="stylesheet" href="../css/Aristo/jquery-ui-1.8.7.custom.css" />--%>
+<link rel="stylesheet" href="../css/cupertino/jquery-ui-1.10.4.custom.css" />
 <link rel="stylesheet" href="../css/minicolors/jQuery.miniColors.css" />
 <link type='text/css' href='../css/osx.css' rel='stylesheet'
 	media='screen' />
@@ -200,8 +201,7 @@
 		<div id="topbar">
 			<div id="toolbar">
 				<div id="logo" class="logo-bg">
-					<span> ${params.username}
-					</span>
+					<span>${params.username}</span>
 				</div>
 
 				<div class="buttons">
@@ -210,16 +210,8 @@
 						class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary osx"
 						name="osx">
 						<span class="partners"></span> <span class="ui-button-text">Partners</span>
-					</button><%--
-
-					<button id="commit"
-						class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary"
-						name="commit">
-						<span class="commit"></span> <span class="ui-button-text">Commit</span>
 					</button>
-
-				--%></div>
-
+				</div>
 			</div>
 		</div>
 

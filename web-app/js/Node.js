@@ -130,17 +130,26 @@ mindhub.Node.fromJSON = function(json) {
 };
 
 mindhub.Node.fromObject = function(obj) {
+	$.each(obj,function(key,value){
+		console.log("Node:",key,value);
+	});
 	var node = new mindhub.Node();
 	node.id = obj.id;
 	node.text = obj.text;
 	node.position = mindhub.Point.fromObject(obj.position);
 	node.isFold = obj.isFold;
 	node.branchColor = obj.branchColor;
-
-	obj.children.forEach(function(child){
-		var childNode = mindhub.Node.fromObject(child);
-		node.addChild(childNode);
-	});
-
+	if (obj.children != null) {
+		$.each(obj.children, function(key,value){
+			// var childNode = mindhub.Node.fromObject(value);
+			// node.addChild(childNode);
+			console.log("### ",key,value)
+		});
+		
+		obj.children.forEach(function(child) {
+			var childNode = mindhub.Node.fromObject(child);
+			node.addChild(childNode);
+		});
+	}
 	return node;
 };
